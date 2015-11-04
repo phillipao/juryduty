@@ -1,5 +1,6 @@
 package com.philoertel.sfjuryduty;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -19,6 +20,10 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class DutiesActivity extends AppCompatActivity {
+    public static final String DUTY_DATE_EXTRA = "com.philoertel.sfjuryduty.DATE";
+    public static final String DUTY_GROUP_EXTRA = "com.philoertel.sfjuryduty.GROUP";
+    public static final String DUTY_ID_EXTRA = "com.philoertel.sfjuryduty.DUTY";
+
     private static final String DATA_FILE = "duties.txt";
 
     private ArrayList<Duty> duties;
@@ -38,6 +43,16 @@ public class DutiesActivity extends AppCompatActivity {
     }
 
     private void setupListViewListener() {
+        lvDuties.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), DutyActivity.class);
+                intent.putExtra(DUTY_ID_EXTRA, "" + position);
+                intent.putExtra(DUTY_DATE_EXTRA, "" + duties.get(position).getDate().getTime());
+                intent.putExtra(DUTY_GROUP_EXTRA, "" + duties.get(position).getGroup());
+                startActivity(intent);
+            }
+        });
         lvDuties.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -69,7 +84,7 @@ public class DutiesActivity extends AppCompatActivity {
     private void readDuties() {
         File filesDir = getFilesDir();
         File dutiesFile = new File(filesDir, DATA_FILE);
-        ArrayList<String> lines = new ArrayList<>();
+        ArrayList<String> lines;
         try {
             lines = new ArrayList<>(FileUtils.readLines(dutiesFile));
         } catch (IOException e) {

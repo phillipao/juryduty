@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SF Jury Duty</string>
+    <string name="title_activity_duty">DutyActivity</string>
 </resources>
