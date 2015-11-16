@@ -18,36 +18,19 @@
         android:layout_alignParentStart="true"
         android:layout_above="@+id/newDutyDatePicker" />
 
-    <DatePicker
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/newDutyDatePicker"
+        android:layout_gravity="bottom|end"
+        android:src="@drawable/ic_action_add"
+        android:clickable="true"
+        android:onClick="onAddButtonClick"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:calendarViewShown="false"
-        android:spinnersShown="true"
-        android:datePickerMode="spinner" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/newDutyNumberText"
-        android:layout_above="@+id/addDutyButton"
-        android:layout_toRightOf="@+id/newDutyDatePicker"
-        android:layout_toEndOf="@+id/newDutyDatePicker"
-        android:hint="group" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add"
-        android:id="@+id/addDutyButton"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/newDutyDatePicker"
-        android:layout_toEndOf="@+id/newDutyDatePicker"
-        android:onClick="addDuty" />
+        android:layout_alignRight="@+id/dutiesView"
+        android:layout_alignEnd="@+id/dutiesView"
+        android:layout_alignParentEnd="false"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp" />
 
 </RelativeLayout>
