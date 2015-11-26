@@ -11,10 +11,6 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class DutiesActivity extends AppCompatActivity {
-    public static final String DUTY_DATE_EXTRA = "com.philoertel.sfjuryduty.DATE";
-    public static final String DUTY_GROUP_EXTRA = "com.philoertel.sfjuryduty.GROUP";
-    public static final String DUTY_ID_EXTRA = "com.philoertel.sfjuryduty.DUTY";
-
     private ArrayList<Duty> duties;
     private ArrayAdapter<Duty> dutiesAdapter;
     private ListView lvDuties;
@@ -38,9 +34,9 @@ public class DutiesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), DutyActivity.class);
-                intent.putExtra(DUTY_ID_EXTRA, position);
-                intent.putExtra(DUTY_DATE_EXTRA, duties.get(position).getDate().getTime());
-                intent.putExtra(DUTY_GROUP_EXTRA, "" + duties.get(position).getGroup());
+                intent.putExtra(DutyActivity.DUTY_ID_EXTRA, position);
+                intent.putExtra(DutyActivity.DUTY_DATE_EXTRA, duties.get(position).getDate().getTime());
+                intent.putExtra(DutyActivity.DUTY_GROUP_EXTRA, "" + duties.get(position).getGroup());
                 startActivity(intent);
             }
         });

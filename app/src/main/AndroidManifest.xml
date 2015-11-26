@@ -7,19 +7,13 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".DutiesActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".DutyActivity"
             android:label="@string/title_activity_duty"
-            android:parentActivityName=".DutiesActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".DutiesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.philoertel.sfjuryduty.DutiesActivity" />
