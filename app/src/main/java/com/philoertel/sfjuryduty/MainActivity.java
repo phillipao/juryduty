@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(getApplicationContext(), DutyActivity.class);
             intent.putExtra(DutyActivity.DUTY_ID_EXTRA, nextDutyId);
-            intent.putExtra(DutyActivity.DUTY_DATE_EXTRA, duties.get(nextDutyId).getDate().getTime());
-            intent.putExtra(DutyActivity.DUTY_GROUP_EXTRA, "" + duties.get(nextDutyId).getGroup());
             startActivity(intent);
         }
 

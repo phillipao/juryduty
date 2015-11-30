@@ -35,8 +35,6 @@ public class DutiesActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), DutyActivity.class);
                 intent.putExtra(DutyActivity.DUTY_ID_EXTRA, position);
-                intent.putExtra(DutyActivity.DUTY_DATE_EXTRA, duties.get(position).getDate().getTime());
-                intent.putExtra(DutyActivity.DUTY_GROUP_EXTRA, "" + duties.get(position).getGroup());
                 startActivity(intent);
             }
         });

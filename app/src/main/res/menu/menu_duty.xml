@@ -8,6 +8,9 @@
         <!--android:title="@string/action_favorite"-->
         <!--app:showAsAction="ifRoom"/>-->
 
+    <item android:id="@+id/action_add_duty"
+        android:title="@string/action_add_duty"/>
+
     <item android:id="@+id/action_duties"
         android:title="@string/action_duties"
         app:showAsAction="never"/>

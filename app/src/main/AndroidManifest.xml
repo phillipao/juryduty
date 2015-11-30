@@ -18,7 +18,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.philoertel.sfjuryduty.DutiesActivity" />
         </activity>
-        <activity android:name=".AddDutyActivity" />
+        <activity android:name=".AddDutyActivity"
+            android:parentActivityName="com.philoertel.sfjuryduty.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.philoertel.sfjuryduty.MainActivity" />
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
