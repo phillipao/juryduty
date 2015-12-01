@@ -24,6 +24,13 @@ public class DutiesLoader {
 
     public ArrayList<Duty> readDuties() {
         File dutiesFile = new File(filesDir, DATA_FILE);
+        if (!dutiesFile.exists()) {
+            try {
+                dutiesFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         ArrayList<String> lines;
         try {
             lines = new ArrayList<>(FileUtils.readLines(dutiesFile));
