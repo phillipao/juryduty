@@ -3,6 +3,8 @@ package com.philoertel.sfjuryduty;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,7 +28,30 @@ public class DutiesActivity extends AppCompatActivity {
         dutiesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, duties);
         lvDuties.setAdapter(dutiesAdapter);
 
+        initToolbar();
         setupListViewListener();
+    }
+
+    private void initToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.duties_title);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case android.R.id.home: {
+                finish();
+                return true;
+            }
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     private void setupListViewListener() {
