@@ -8,4 +8,5 @@
     <string name="save_button">Save</string>
     <string name="edit_view_title">Edit</string>
     <string name="duties_title">All duties</string>
+    <string name="days_left_label">days until jury duty</string>
 </resources>

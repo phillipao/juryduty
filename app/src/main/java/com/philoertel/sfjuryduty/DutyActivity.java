@@ -8,11 +8,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class DutyActivity extends AppCompatActivity {
     public static final String DUTY_ID_EXTRA = "com.philoertel.sfjuryduty.DUTY";
+
+    private Duty mDuty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,19 +28,25 @@ public class DutyActivity extends AppCompatActivity {
         int position =  intent.getIntExtra(DUTY_ID_EXTRA, 0);
         DutiesLoader dutiesLoader = new DutiesLoader(getFilesDir());
         ArrayList<Duty> duties = dutiesLoader.readDuties();
-        Duty duty = duties.get(position);
-        TextView dateView = (TextView) findViewById(R.id.date);
-        dateView.setText(SimpleDateFormat.getDateInstance().format(duty.getDate()));
-        TextView groupView = (TextView) findViewById(R.id.group);
-        groupView.setText(duty.getGroup() + "");
+        mDuty = duties.get(position);
 
         initToolbar();
+        displayDuty();
     }
 
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(R.string.app_name);
+        toolbar.setTitle(formatDate(mDuty));
         setSupportActionBar(toolbar);
+    }
+
+    private void displayDuty() {
+        DateTime now = new DateTime();
+        int daysAhead = Days.daysBetween(now, new DateTime(mDuty.getDate().getTime())).getDays();
+        TextView daysLeftView = (TextView) findViewById(R.id.daysLeftView);
+        daysLeftView.setText(daysAhead + "");
+        TextView groupView = (TextView) findViewById(R.id.group);
+        groupView.setText(mDuty.getGroup() + "");
     }
 
     @Override
@@ -67,5 +78,9 @@ public class DutyActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    private String formatDate(Duty duty) {
+        return SimpleDateFormat.getDateInstance().format(duty.getDate());
     }
 }

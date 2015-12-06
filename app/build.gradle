@@ -25,4 +25,11 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile 'commons-io:commons-io:2.4'
     compile 'com.android.support:design:22.2.1'
+    compile 'joda-time:joda-time:2.9.1'
+}
+android {
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 }
