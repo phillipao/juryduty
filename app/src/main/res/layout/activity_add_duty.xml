@@ -9,44 +9,43 @@
 
     <include layout="@layout/toolbar"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar">
+        android:layout_below="@+id/toolbar"
+        android:id="@+id/relativeLayout">
 
-    <DatePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/newDutyDatePicker"
-        android:calendarViewShown="false"
-        android:spinnersShown="true"
-        android:datePickerMode="spinner"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <DatePicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/newDutyDatePicker"
+            android:calendarViewShown="false"
+            android:spinnersShown="true"
+            android:datePickerMode="spinner"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="45dp"/>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/newDutyNumberText"
-        android:hint="group"
-        android:layout_below="@+id/newDutyDatePicker"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/newDutyNumberText"
+            android:hint="group"
+            android:layout_below="@+id/newDutyDatePicker"
+            android:layout_centerHorizontal="true"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add"
-        android:id="@+id/addDutyButton"
-        android:onClick="addDuty"
-        android:layout_below="@+id/newDutyNumberText"
-        android:layout_alignRight="@+id/dutiesView"
-        android:layout_alignEnd="@+id/dutiesView" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:id="@+id/addDutyButton"
+            android:onClick="addDuty"
+            android:layout_below="@+id/newDutyNumberText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="45dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>
