@@ -38,5 +38,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        new GcmRegistrationAsyncTask(this).execute();
     }
 }
