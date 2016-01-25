@@ -37,7 +37,5 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(DutyActivity.DUTY_ID_EXTRA, nextDutyId);
             startActivity(intent);
         }
-
-        new GcmRegistrationAsyncTask(this).execute();
     }
 }
