@@ -21,8 +21,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String ACCOUNT = "default_account";
 
     Account mAccount;
-    // A content resolver for accessing the provider
-    ContentResolver mResolver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         mAccount = CreateSyncAccount(this);
         // Turn on automatic syncing for the default account and authority
-        mResolver = getContentResolver();
-        mResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
+        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
         TriggerRefresh();
 
         setContentView(R.layout.activity_main);
@@ -72,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         AccountManager accountManager =
                 (AccountManager) context.getSystemService(ACCOUNT_SERVICE);
         // Add the account and account type, no password or user data.
-        // Some
         accountManager.addAccountExplicitly(newAccount, null, null);
         return newAccount;
     }

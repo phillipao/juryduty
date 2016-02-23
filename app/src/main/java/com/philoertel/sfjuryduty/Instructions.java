@@ -3,6 +3,8 @@ package com.philoertel.sfjuryduty;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -23,6 +25,7 @@ import java.util.Objects;
  * <p>Annotations are included for reading/writing to AWS DynamoDB.
  */
 @DynamoDBTable(tableName = "Instructions")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Instructions {
 
     // Reporting instructions implicitly refer to US/Pacific time.
@@ -37,6 +40,7 @@ public class Instructions {
 
     public Instructions() {}
 
+    @JsonIgnore
     public DateTime getDateTime() {
         return formatter.parseDateTime(dateString);
     }
