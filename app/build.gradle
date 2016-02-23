@@ -27,13 +27,35 @@ dependencies {
     compile 'commons-io:commons-io:2.4'
     compile 'com.android.support:design:23.1.1'
     compile 'joda-time:joda-time:2.9.1'
-    compile 'com.google.android.gms:play-services-gcm:8.4.0'
+
+    compile 'com.amazonaws:aws-android-sdk-core:2.+'
+    compile 'com.amazonaws:aws-android-sdk-cognito:2.+'
+    compile 'com.amazonaws:aws-android-sdk-ddb:2.+'
+    compile 'com.amazonaws:aws-android-sdk-ddb-mapper:2.+'
+
+    compile 'com.fasterxml.jackson.core:jackson-core:2.4.1'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.4.1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1'
+
+    compile 'org.apache.commons:commons-lang3:3.4'
 }
 android {
     packagingOptions {
+        exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
         exclude 'META-INF/NOTICE.txt'
     }
 }
 
-apply plugin: 'com.google.gms.google-services'
+// Dexcount. Displays method count on each build invocation. See
+// https://github.com/KeepSafe/dexcount-gradle-plugin.
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.getkeepsafe.dexcount:dexcount-gradle-plugin:0.4.1'
+    }
+}
+apply plugin: 'com.getkeepsafe.dexcount'
