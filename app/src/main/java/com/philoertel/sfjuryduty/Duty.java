@@ -59,8 +59,11 @@ public class Duty {
         return SimpleDateFormat.getDateInstance().format(getDate());
     }
 
+    /**
+     * Whether this Duty and the provided Instructions intersect.
+     */
     public boolean calledBy(Instructions instructions) {
-        // TODO: check if the dates and groups intersect
-        return true;
+        return getWeekInterval().contains(instructions.getDateTime())
+                && instructions.getReportingGroups().contains(group);
     }
 }
