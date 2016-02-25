@@ -2,19 +2,27 @@ package com.philoertel.sfjuryduty;
 
 import android.util.Log;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * Class responsible for loading Duty objects from disk and saving back to disk.
+ *
+ * <p>Jackson does most of the serialization work.
  */
 public class DutiesLoader {
     private static final String DATA_FILE = "duties.txt";
+
+    public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private final File filesDir;
 
@@ -39,27 +47,16 @@ public class DutiesLoader {
             return new ArrayList<>();
         }
         ArrayList<Duty> newDuties = new ArrayList<>();
+        ObjectReader reader = OBJECT_MAPPER.readerFor(Duty.class);
         for (String line : lines) {
-            String[] split = line.split(",");
-            if (split.length != 2) {
-                Log.w("duty", String.format("Invalid duty input %s", line));
-                continue;
-            }
-            long millis;
+            Duty duty;
             try {
-                millis = Long.parseLong(split[0]);
-            } catch (NumberFormatException e) {
+                duty = reader.readValue(line);
+            } catch (IOException e) {
                 e.printStackTrace();
                 continue;
             }
-            int group;
-            try {
-                group = Integer.parseInt(split[1]);
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-                continue;
-            }
-            newDuties.add(new Duty(new Date(millis), group));
+            newDuties.add(duty);
         }
         return newDuties;
     }
@@ -68,8 +65,12 @@ public class DutiesLoader {
         File dutiesFile = new File(filesDir, DATA_FILE);
         ArrayList<String> lines = new ArrayList<>();
         for (Duty duty : duties) {
-            String line = duty.getDate().getTime() + "," + duty.getGroup();
-            lines.add(line);
+            ObjectWriter writer = OBJECT_MAPPER.writer();
+            try {
+                lines.add(writer.writeValueAsString(duty));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
         }
         try {
             FileUtils.writeLines(dutiesFile, lines);

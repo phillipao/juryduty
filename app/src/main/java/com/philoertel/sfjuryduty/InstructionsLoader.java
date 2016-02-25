@@ -46,7 +46,7 @@ public class InstructionsLoader {
         }
         ArrayList<Instructions> newInstructions = new ArrayList<>();
 
-        ObjectReader reader = OBJECT_MAPPER.reader(Instructions.class);
+        ObjectReader reader = OBJECT_MAPPER.readerFor(Instructions.class);
         for (String line : lines) {
             Instructions instructions;
             try {

@@ -41,12 +41,13 @@ public class DutyActivity extends AppCompatActivity {
     }
 
     private void displayDuty() {
+        // TODO: audit all of this for correct use of TZ
         DateTime now = new DateTime();
         int daysAhead = Days.daysBetween(now, new DateTime(mDuty.getDate().getTime())).getDays();
         TextView daysLeftView = (TextView) findViewById(R.id.daysLeftView);
         daysLeftView.setText(daysAhead + "");
         TextView groupView = (TextView) findViewById(R.id.group);
-        groupView.setText(mDuty.getGroup() + "");
+        groupView.setText(mDuty.getGroup());
     }
 
     @Override

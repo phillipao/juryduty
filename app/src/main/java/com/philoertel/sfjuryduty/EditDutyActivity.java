@@ -32,7 +32,8 @@ public class EditDutyActivity extends AppCompatActivity {
         mDatePicker = (DatePicker) findViewById(R.id.edit_duty_date_picker);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(duty.getDate());
-        mDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        mDatePicker.updateDate(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
         mGroupView = (EditText) findViewById(R.id.edit_duty_group_number);
         mGroupView.setText(duty.getGroup());
 
@@ -48,15 +49,8 @@ public class EditDutyActivity extends AppCompatActivity {
     }
 
     public void saveDuty(View v) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(mDatePicker.getYear(), mDatePicker.getMonth(), mDatePicker.getDayOfMonth());
-        int group;
-        try {
-            group = Integer.valueOf(mGroupView.getText().toString());
-        } catch (NumberFormatException e) {
-            return;
-        }
-        Duty duty = new Duty(calendar.getTime(), group);
+        Duty duty = Duty.fromYearMonthDayGroup(mDatePicker.getYear(), mDatePicker.getMonth() + 1,
+                mDatePicker.getDayOfMonth(), mGroupView.getText().toString());
         mDuties.set(mPosition, duty);
         mDutiesLoader.saveDuties(mDuties);
 

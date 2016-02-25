@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class AddDutyActivity extends AppCompatActivity {
     private DutiesLoader dutiesLoader;
@@ -76,16 +75,8 @@ public class AddDutyActivity extends AppCompatActivity {
     private void addDuty() {
         EditText etNewDuty = (EditText) findViewById(R.id.newDutyNumberText);
         DatePicker datePicker = (DatePicker) findViewById(R.id.newDutyDatePicker);
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-        int group;
-        try {
-            group = Integer.valueOf(etNewDuty.getText().toString());
-        } catch (NumberFormatException e) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Invalid group number", Toast.LENGTH_SHORT);
-            return;
-        }
-        Duty duty = new Duty(calendar.getTime(), group);
+        Duty duty = Duty.fromYearMonthDayGroup(datePicker.getYear(), datePicker.getMonth() + 1,
+                datePicker.getDayOfMonth(), etNewDuty.getText().toString());
         duties.add(duty);
         dutiesLoader.saveDuties(duties);
 
