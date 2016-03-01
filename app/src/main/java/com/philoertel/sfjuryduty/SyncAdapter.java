@@ -1,12 +1,16 @@
 package com.philoertel.sfjuryduty;
 
 import android.accounts.Account;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SyncResult;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
@@ -92,7 +96,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         for (Duty duty : duties) {
             for (Instructions instructions : newSet) {
                 if (duty.calledBy(instructions)) {
-                    createNotification(instructions);
+                    createNotification(getContext(), instructions);
                 }
             }
         }
@@ -100,7 +104,25 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d(TAG, "Done syncing");
     }
 
-    private void createNotification(Instructions instructions) {
-        Log.e(TAG, "createNotification not implemented for " + instructions);
+    static void createNotification(Context context, Instructions instructions) {
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(context);
+        mBuilder.setSmallIcon(R.drawable.ic_action_add)
+                .setContentTitle("Jury duty")
+                .setContentText("Looks like you got jury duty. Click for details...")
+                .setAutoCancel(true);
+        Intent dutyIntent = new Intent(context, DutyActivity.class);
+        PendingIntent dutyPendingIntent =
+                PendingIntent.getActivity(
+                        context,
+                        0,
+                        dutyIntent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                );
+        mBuilder.setContentIntent(dutyPendingIntent);
+        int mNotificationId = 001;
+        NotificationManager mNotifyMgr =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotifyMgr.notify(mNotificationId, mBuilder.build());
     }
 }

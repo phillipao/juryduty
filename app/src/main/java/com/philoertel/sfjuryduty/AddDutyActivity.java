@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AddDutyActivity extends AppCompatActivity {
     private DutiesLoader dutiesLoader;
@@ -79,6 +80,14 @@ public class AddDutyActivity extends AppCompatActivity {
                 datePicker.getDayOfMonth(), etNewDuty.getText().toString());
         duties.add(duty);
         dutiesLoader.saveDuties(duties);
+
+        InstructionsLoader loader = new InstructionsLoader(getFilesDir());
+        List<Instructions> instructionses = loader.readInstructions();
+        for (Instructions instructions : instructionses) {
+            if (duty.calledBy(instructions)) {
+                SyncAdapter.createNotification(this, instructions);
+            }
+        }
 
         Toast toast = Toast.makeText(getApplicationContext(), "Saved!", Toast.LENGTH_SHORT);
         toast.show();

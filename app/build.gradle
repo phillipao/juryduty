@@ -23,15 +23,15 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile project(path: ':backend', configuration: 'android-endpoints')
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.2.0'
     compile 'commons-io:commons-io:2.4'
-    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:design:23.2.0'
     compile 'joda-time:joda-time:2.9.1'
 
-    compile 'com.amazonaws:aws-android-sdk-core:2.+'
-    compile 'com.amazonaws:aws-android-sdk-cognito:2.+'
-    compile 'com.amazonaws:aws-android-sdk-ddb:2.+'
-    compile 'com.amazonaws:aws-android-sdk-ddb-mapper:2.+'
+    compile 'com.amazonaws:aws-android-sdk-core:2.2.12'
+    compile 'com.amazonaws:aws-android-sdk-cognito:2.2.12'
+    compile 'com.amazonaws:aws-android-sdk-ddb:2.2.12'
+    compile 'com.amazonaws:aws-android-sdk-ddb-mapper:2.2.12'
 
     compile 'com.fasterxml.jackson.core:jackson-core:2.7.1'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.7.1'
