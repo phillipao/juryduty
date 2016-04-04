@@ -6,13 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class DutyActivity extends AppCompatActivity {
     public static final String DUTY_ID_EXTRA = "com.philoertel.sfjuryduty.DUTY";
@@ -27,7 +29,7 @@ public class DutyActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int position =  intent.getIntExtra(DUTY_ID_EXTRA, 0);
         DutiesLoader dutiesLoader = new DutiesLoader(getFilesDir());
-        ArrayList<Duty> duties = dutiesLoader.readDuties();
+        List<Duty> duties = dutiesLoader.readDuties();
         mDuty = duties.get(position);
 
         initToolbar();
@@ -44,10 +46,61 @@ public class DutyActivity extends AppCompatActivity {
         // TODO: audit all of this for correct use of TZ
         DateTime now = new DateTime();
         int daysAhead = Days.daysBetween(now, new DateTime(mDuty.getDate().getTime())).getDays();
-        TextView daysLeftView = (TextView) findViewById(R.id.daysLeftView);
-        daysLeftView.setText(daysAhead + "");
+
+        if (daysAhead > 0) {
+            getLayoutInflater().inflate(R.layout.view_future_duty,
+                    (RelativeLayout) findViewById(R.id.dutyLayout));
+
+            TextView daysLeftView = (TextView) findViewById(R.id.daysLeftView);
+            daysLeftView.setText(daysAhead + "");
+        } else {
+            getLayoutInflater().inflate(R.layout.view_past_duty,
+                    (RelativeLayout) findViewById(R.id.dutyLayout));
+
+            TextView daysAgoView = (TextView) findViewById(R.id.daysAgoView);
+            daysAgoView.setText(getDaysAgoString(-daysAhead - 4)); // how many days ago it ended
+
+            InstructionsLoader instructionsLoader = new InstructionsLoader(getFilesDir());
+            List<Instructions> instructionses = instructionsLoader.readInstructions();
+            String groupCalledSummary = summarizePastDuty(instructionses);
+            TextView groupCalledView = (TextView) findViewById(R.id.groupCalledView);
+            groupCalledView.setText(groupCalledSummary);
+        }
         TextView groupView = (TextView) findViewById(R.id.group);
         groupView.setText(mDuty.getGroup());
+    }
+
+    private String getDaysAgoString(int endedDaysAgo) {
+        if (endedDaysAgo <= 0) {
+            throw new IllegalStateException(
+                    "Called getDaysAgoString with value" + endedDaysAgo + ", meaning duty is not past");
+        }
+        if (endedDaysAgo == 1) {
+            return "Ended yesterday";
+        } else {
+            return String.format("Ended %s days ago", endedDaysAgo);
+        }
+    }
+
+    private String summarizePastDuty(Collection<Instructions> instructionses) {
+        int matchingInstructions = 0;
+        for (Instructions instructions : instructionses) {
+            if (mDuty.overlapsWith(instructions)) {
+                ++matchingInstructions;
+                if (mDuty.calledBy(instructions)) {
+                    return String.format("Your group was called on %s.",
+                            SimpleDateFormat.getDateInstance().format(
+                                    instructions.getDateTime().toDate()));
+                }
+            }
+        }
+        if (matchingInstructions >= 5) {
+            return "Your group was not called.";
+        } else if (matchingInstructions == 0) {
+            return "We don't have any data for that week.";
+        } else {
+            return "Data for that week is incomplete.";
+        }
     }
 
     @Override
@@ -82,6 +135,7 @@ public class DutyActivity extends AppCompatActivity {
     }
 
     private String formatDate(Duty duty) {
-        return SimpleDateFormat.getDateInstance().format(duty.getDate());
+        return String.format("Week of %s",
+                SimpleDateFormat.getDateInstance().format(duty.getDate()));
     }
 }

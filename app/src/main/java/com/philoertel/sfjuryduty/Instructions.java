@@ -45,6 +45,9 @@ public class Instructions {
         return formatter.parseDateTime(dateString);
     }
 
+    /**
+     * The date in yyyymmdd (ISO 8601 basic) format. All times are Pacific.
+     */
     @DynamoDBHashKey(attributeName = "date")
     public String getDateString() {
         return dateString;
