@@ -135,7 +135,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                         PendingIntent.FLAG_UPDATE_CURRENT
                 );
         mBuilder.setContentIntent(dutyPendingIntent);
-        int mNotificationId = 001;
+        int mNotificationId = 1;
         NotificationManager mNotifyMgr =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotifyMgr.notify(mNotificationId, mBuilder.build());
