@@ -23,9 +23,9 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile project(path: ':backend', configuration: 'android-endpoints')
-    compile 'com.android.support:appcompat-v7:23.2.0'
+    compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'commons-io:commons-io:2.4'
-    compile 'com.android.support:design:23.2.0'
+    compile 'com.android.support:design:23.2.1'
     compile 'joda-time:joda-time:2.9.1'
 
     compile 'com.amazonaws:aws-android-sdk-core:2.2.12'
