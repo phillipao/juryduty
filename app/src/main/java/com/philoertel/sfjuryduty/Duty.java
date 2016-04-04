@@ -59,11 +59,15 @@ public class Duty {
         return SimpleDateFormat.getDateInstance().format(getDate());
     }
 
+    public boolean overlapsWith(Instructions instructions) {
+        return getWeekInterval().contains(instructions.getDateTime());
+    }
+
     /**
      * Whether this Duty and the provided Instructions intersect.
      */
     public boolean calledBy(Instructions instructions) {
-        return getWeekInterval().contains(instructions.getDateTime())
+        return overlapsWith(instructions)
                 && instructions.getReportingGroups().contains(group);
     }
 }

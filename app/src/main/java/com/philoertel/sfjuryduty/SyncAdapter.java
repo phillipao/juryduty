@@ -93,10 +93,15 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         DutiesLoader dutiesLoader = new DutiesLoader(getContext().getFilesDir());
         List<Duty> duties = dutiesLoader.readDuties();
 
-        for (Duty duty : duties) {
+        for (int i = 0; i < duties.size(); ++i) {
+            Duty duty = duties.get(i);
             for (Instructions instructions : newSet) {
-                if (duty.calledBy(instructions)) {
-                    createNotification(getContext(), instructions);
+                if (duty.overlapsWith(instructions)) {
+                    if (duty.calledBy(instructions)) {
+                        createPositiveNotification(getContext(), i);
+                    } else {
+                        createNegativeNotification(getContext(), i);
+                    }
                 }
             }
         }
@@ -104,14 +109,24 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d(TAG, "Done syncing");
     }
 
-    static void createNotification(Context context, Instructions instructions) {
+    static void createPositiveNotification(Context context, int dutyIndex) {
+        createNotification(context, dutyIndex,
+                "Looks like you got jury duty. Click for details...");
+    }
+
+    static void createNegativeNotification(Context context, int dutyIndex) {
+        createNotification(context, dutyIndex, "You do not have jury duty");
+    }
+
+    static void createNotification(Context context, int dutyIndex, String message) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context);
         mBuilder.setSmallIcon(R.drawable.ic_action_add)
                 .setContentTitle("Jury duty")
-                .setContentText("Looks like you got jury duty. Click for details...")
+                .setContentText(message)
                 .setAutoCancel(true);
         Intent dutyIntent = new Intent(context, DutyActivity.class);
+        dutyIntent.putExtra(DutyActivity.DUTY_ID_EXTRA, dutyIndex);
         PendingIntent dutyPendingIntent =
                 PendingIntent.getActivity(
                         context,

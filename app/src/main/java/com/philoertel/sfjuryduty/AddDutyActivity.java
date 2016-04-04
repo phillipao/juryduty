@@ -78,6 +78,7 @@ public class AddDutyActivity extends AppCompatActivity {
         DatePicker datePicker = (DatePicker) findViewById(R.id.newDutyDatePicker);
         Duty duty = Duty.fromYearMonthDayGroup(datePicker.getYear(), datePicker.getMonth() + 1,
                 datePicker.getDayOfMonth(), etNewDuty.getText().toString());
+        int newDutyIndex = duties.size();
         duties.add(duty);
         dutiesLoader.saveDuties(duties);
 
@@ -85,14 +86,14 @@ public class AddDutyActivity extends AppCompatActivity {
         List<Instructions> instructionses = loader.readInstructions();
         for (Instructions instructions : instructionses) {
             if (duty.calledBy(instructions)) {
-                SyncAdapter.createNotification(this, instructions);
+                SyncAdapter.createPositiveNotification(this, newDutyIndex);
             }
         }
 
         Toast toast = Toast.makeText(getApplicationContext(), "Saved!", Toast.LENGTH_SHORT);
         toast.show();
         Intent intent = new Intent(getApplicationContext(), DutyActivity.class);
-        intent.putExtra(DutyActivity.DUTY_ID_EXTRA, duties.size() - 1);
+        intent.putExtra(DutyActivity.DUTY_ID_EXTRA, newDutyIndex);
         startActivity(intent);
     }
 }
