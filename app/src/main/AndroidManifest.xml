@@ -47,7 +47,7 @@
             android:syncable="true">
         </provider>
         <service
-            android:name="com.philoertel.sfjuryduty.AuthenticatorService">
+            android:name=".AuthenticatorService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>
@@ -58,7 +58,6 @@
         <service
             android:name=".SyncService"
             android:exported="true">
-            <!--android:process=":sync">-->
             <intent-filter>
                 <action android:name="android.content.SyncAdapter"/>
             </intent-filter>
@@ -71,5 +70,16 @@
             </intent-filter>
             <meta-data android:name="android.accounts.AccountAuthenticator" android:resource="@xml/authenticator" />
         </service>
+
+        <receiver android:name=".BootCompletedReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name="NoDataAlarmReceiver">
+        </receiver>
+
+        <!--<activity android:name=".DebugActivity">-->
+        <!--</activity>-->
     </application>
 </manifest>

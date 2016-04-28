@@ -53,36 +53,43 @@ public class DutyActivity extends AppCompatActivity {
 
             TextView daysLeftView = (TextView) findViewById(R.id.daysLeftView);
             daysLeftView.setText(daysAhead + "");
+        } else if (daysAhead >= -4) {
+            getLayoutInflater().inflate(R.layout.view_past_duty,
+                    (RelativeLayout) findViewById(R.id.dutyLayout));
+
+            TextView daysAgoView = (TextView) findViewById(R.id.daysAgoView);
+            daysAgoView.setText(summarizeDutyTime(daysAhead)); // how many days ago it ended
+
+            InstructionsLoader instructionsLoader = new InstructionsLoader(getFilesDir());
+            List<Instructions> instructionses = instructionsLoader.readInstructions();
+            String groupCalledSummary = summarizeDutyOutcome(instructionses);
+            TextView groupCalledView = (TextView) findViewById(R.id.groupCalledView);
+            groupCalledView.setText(groupCalledSummary);
         } else {
             getLayoutInflater().inflate(R.layout.view_past_duty,
                     (RelativeLayout) findViewById(R.id.dutyLayout));
 
             TextView daysAgoView = (TextView) findViewById(R.id.daysAgoView);
-            daysAgoView.setText(getDaysAgoString(-daysAhead - 4)); // how many days ago it ended
+            daysAgoView.setText("This week");
 
-            InstructionsLoader instructionsLoader = new InstructionsLoader(getFilesDir());
-            List<Instructions> instructionses = instructionsLoader.readInstructions();
-            String groupCalledSummary = summarizePastDuty(instructionses);
-            TextView groupCalledView = (TextView) findViewById(R.id.groupCalledView);
-            groupCalledView.setText(groupCalledSummary);
         }
         TextView groupView = (TextView) findViewById(R.id.group);
         groupView.setText(mDuty.getGroup());
     }
 
-    private String getDaysAgoString(int endedDaysAgo) {
-        if (endedDaysAgo <= 0) {
-            throw new IllegalStateException(
-                    "Called getDaysAgoString with value" + endedDaysAgo + ", meaning duty is not past");
-        }
-        if (endedDaysAgo == 1) {
+    private String summarizeDutyTime(int startDaysAhead) {
+        if (startDaysAhead > 2) {
+            return "Not started yet.";
+        } else if (startDaysAhead > -4) {
+            return "This week.";
+        } else if (startDaysAhead == -5) {
             return "Ended yesterday";
         } else {
-            return String.format("Ended %s days ago", endedDaysAgo);
+            return String.format("Ended %s days ago", -startDaysAhead);
         }
     }
 
-    private String summarizePastDuty(Collection<Instructions> instructionses) {
+    private String summarizeDutyOutcome(Collection<Instructions> instructionses) {
         int matchingInstructions = 0;
         for (Instructions instructions : instructionses) {
             if (mDuty.overlapsWith(instructions)) {
@@ -96,6 +103,8 @@ public class DutyActivity extends AppCompatActivity {
         }
         if (matchingInstructions >= 5) {
             return "Your group was not called.";
+        } else if (mDuty.getWeekInterval().contains(DateTime.now())) {
+            return "Your number has not been called yet.";
         } else if (matchingInstructions == 0) {
             return "We don't have any data for that week.";
         } else {
@@ -121,6 +130,11 @@ public class DutyActivity extends AppCompatActivity {
 
             case R.id.action_settings:
                 // User chose the "Settings" item, show the app settings UI...
+                return true;
+
+            case R.id.action_debug:
+                intent = new Intent(getApplicationContext(), DebugActivity.class);
+                startActivity(intent);
                 return true;
 
             case R.id.action_duties:

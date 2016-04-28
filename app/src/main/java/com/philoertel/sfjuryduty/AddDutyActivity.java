@@ -49,7 +49,7 @@ public class AddDutyActivity extends AppCompatActivity {
 
             case android.R.id.home: {
                 Context context = getApplicationContext();
-                CharSequence text = "Canceled";
+                CharSequence text = getString(R.string.toast_canceled);
                 int duration = Toast.LENGTH_SHORT;
 
                 Toast toast = Toast.makeText(context, text, duration);
@@ -90,7 +90,9 @@ public class AddDutyActivity extends AppCompatActivity {
             }
         }
 
-        Toast toast = Toast.makeText(getApplicationContext(), "Saved!", Toast.LENGTH_SHORT);
+        new NoDataAlarmSetter().setAlarms(this);
+
+        Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_saved, Toast.LENGTH_SHORT);
         toast.show();
         Intent intent = new Intent(getApplicationContext(), DutyActivity.class);
         intent.putExtra(DutyActivity.DUTY_ID_EXTRA, newDutyIndex);
