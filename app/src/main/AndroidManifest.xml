@@ -80,7 +80,7 @@
         <receiver android:name="NoDataAlarmReceiver">
         </receiver>
 
-        <!--<activity android:name=".DebugActivity">-->
-        <!--</activity>-->
+        <activity android:name=".DebugActivity">
+        </activity>
     </application>
 </manifest>
