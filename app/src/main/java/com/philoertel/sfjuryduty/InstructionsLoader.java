@@ -17,10 +17,10 @@ import java.util.List;
  *
  * <p>Jackson does most of the serialization work.
  */
-public class InstructionsLoader {
+class InstructionsLoader {
     private static final String DATA_FILE = "instructions.txt";
 
-    public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private final File filesDir;
 

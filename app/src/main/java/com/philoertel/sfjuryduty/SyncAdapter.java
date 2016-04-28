@@ -28,12 +28,12 @@ import java.util.Set;
  * Handle the transfer of data between a server and an
  * app, using the Android sync adapter framework.
  */
-public class SyncAdapter extends AbstractThreadedSyncAdapter {
+class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     private static final String TAG = "SyncAdapter";
     // Global variables
     // Define a variable to contain a content resolver instance
-    ContentResolver mContentResolver;
+    private final ContentResolver mContentResolver;
 
     /**
      * Set up the sync adapter
@@ -114,11 +114,11 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                 "Looks like you got jury duty. Click for details...");
     }
 
-    static void createNegativeNotification(Context context, int dutyIndex) {
+    private static void createNegativeNotification(Context context, int dutyIndex) {
         createNotification(context, dutyIndex, "You do not have jury duty");
     }
 
-    static void createNotification(Context context, int dutyIndex, String message) {
+    private static void createNotification(Context context, int dutyIndex, String message) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context);
         mBuilder.setSmallIcon(R.drawable.ic_action_add)

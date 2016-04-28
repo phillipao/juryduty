@@ -16,11 +16,11 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
-    public static final String AUTHORITY = "com.philoertel.sfjuryduty.provider";
-    public static final String ACCOUNT_TYPE = "philoertel.com";
-    public static final String ACCOUNT = "default_account";
+    private static final String AUTHORITY = "com.philoertel.sfjuryduty.provider";
+    private static final String ACCOUNT_TYPE = "philoertel.com";
+    private static final String ACCOUNT = "default_account";
 
-    Account mAccount;
+    private Account mAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @param context The application context
      */
-    public static Account CreateSyncAccount(Context context) {
+    private static Account CreateSyncAccount(Context context) {
         // Create the account type and default account
         Account newAccount = new Account(ACCOUNT, ACCOUNT_TYPE);
         // Get an instance of the Android account manager
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
      * but the user is not actively waiting for that data, you should omit this flag; this will give
      * the OS additional freedom in scheduling your sync request.
      */
-    public static void TriggerRefresh() {
+    private static void TriggerRefresh() {
         Bundle b = new Bundle();
         // Disable sync backoff and ignore sync preferences. In other words...perform sync NOW!
         b.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);

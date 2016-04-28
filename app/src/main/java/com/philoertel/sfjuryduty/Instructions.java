@@ -26,10 +26,11 @@ import java.util.Objects;
  */
 @DynamoDBTable(tableName = "Instructions")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Instructions {
+class Instructions {
 
     // Reporting instructions implicitly refer to US/Pacific time.
-    private static DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyyMMdd").withZone(
+    private static final DateTimeFormatter formatter = DateTimeFormat.forPattern(
+            "yyyyMMdd").withZone(
             DateTimeZone.forID("America/Los_Angeles"));
 
     // The date to which these instructions apply.

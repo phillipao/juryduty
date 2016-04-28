@@ -12,7 +12,7 @@ import java.util.Collection;
 /**
  * Class to set NoDataAlarms for all pending duties.
  */
-public class NoDataAlarmSetter {
+class NoDataAlarmSetter {
 
     public void setAlarms(Context context) {
         DutiesLoader dutiesLoader = new DutiesLoader(context.getFilesDir());
