@@ -31,30 +31,11 @@ public class MainActivity extends AppCompatActivity {
         ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
         TriggerRefresh();
 
-        setContentView(R.layout.activity_main);
+        Intent intent = new Intent(this, DutiesActivity.class);
+        startActivity(intent);
 
-        DutiesLoader dutiesLoader = new DutiesLoader(getFilesDir());
-        ArrayList<Duty> duties = dutiesLoader.readDuties();
-
-        Date today = Calendar.getInstance().getTime();
-        Duty nextDuty = null;
-        Integer nextDutyId = null;
-        for (int i = 0; i < duties.size(); ++i) {
-            Duty duty = duties.get(i);
-            if (duty.getDate().after(today) && (nextDuty == null || duty.getDate().before(nextDuty.getDate()))) {
-                nextDutyId = i;
-                nextDuty = duty;
-            }
-        }
-
-        if (nextDuty == null) {
-            Intent intent = new Intent(getApplicationContext(), AddDutyActivity.class);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(getApplicationContext(), DutyActivity.class);
-            intent.putExtra(DutyActivity.DUTY_ID_EXTRA, nextDutyId);
-            startActivity(intent);
-        }
+        // Destroy the activity so it doesn't end up in the back stack.
+        finish();
     }
 
     /**
