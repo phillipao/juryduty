@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
@@ -17,6 +18,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class DutyActivity extends AppCompatActivity {
+    private static final String TAG = "DutyActivity";
     public static final String DUTY_ID_EXTRA = "com.philoertel.sfjuryduty.DUTY";
 
     private Duty mDuty;
@@ -53,7 +55,7 @@ public class DutyActivity extends AppCompatActivity {
 
             TextView daysLeftView = (TextView) findViewById(R.id.daysLeftView);
             daysLeftView.setText(daysAhead + "");
-        } else if (daysAhead >= -4) {
+        } else if (daysAhead <= -4) {
             getLayoutInflater().inflate(R.layout.view_past_duty,
                     (RelativeLayout) findViewById(R.id.dutyLayout));
 
