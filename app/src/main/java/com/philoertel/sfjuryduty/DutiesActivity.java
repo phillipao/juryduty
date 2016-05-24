@@ -13,23 +13,28 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 public class DutiesActivity extends AppCompatActivity {
-    private ArrayList<Duty> duties;
+    private ArrayList<Duty> duties = new ArrayList<>();
     private ArrayAdapter<Duty> dutiesAdapter;
-    private ListView lvDuties;
     private DutiesLoader dutiesLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_duties);
-        lvDuties = (ListView) findViewById(R.id.dutiesView);
+        ListView lvDuties = (ListView) findViewById(R.id.dutiesView);
         dutiesLoader = new DutiesLoader(getFilesDir());
-        duties = dutiesLoader.readDuties();
         dutiesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, duties);
         lvDuties.setAdapter(dutiesAdapter);
 
         initToolbar();
-        setupListViewListener();
+        setupListViewListener(lvDuties);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        duties = dutiesLoader.readDuties();
+        dutiesAdapter.notifyDataSetChanged();
     }
 
     private void initToolbar() {
@@ -54,7 +59,7 @@ public class DutiesActivity extends AppCompatActivity {
         }
     }
 
-    private void setupListViewListener() {
+    private void setupListViewListener(ListView lvDuties) {
         lvDuties.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
