@@ -16,16 +16,24 @@
         android:layout_below="@+id/toolbar"
         android:id="@+id/dutiesLayout">
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dutiesView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/newDutyDatePicker" />
-
+        <ListView
+            android:id="@+id/dutiesView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/newDutyDatePicker"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/emptyDutiesView"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/no_jury_duty"
+        android:textSize="90dp"
+        android:visibility="gone" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

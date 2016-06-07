@@ -22,6 +22,7 @@ public class DutiesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_duties);
         ListView lvDuties = (ListView) findViewById(R.id.dutiesView);
+        lvDuties.setEmptyView(findViewById(R.id.emptyDutiesView));
         dutiesLoader = new DutiesLoader(getFilesDir());
         dutiesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, duties);
         lvDuties.setAdapter(dutiesAdapter);
@@ -34,6 +35,7 @@ public class DutiesActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         duties = dutiesLoader.readDuties();
+        duties = new ArrayList<>();
         dutiesAdapter.notifyDataSetChanged();
     }
 
