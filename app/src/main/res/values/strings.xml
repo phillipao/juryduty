@@ -20,4 +20,6 @@
     <string name="no_data_alarm_debug_button_title">No data alarm</string>
     <string name="action_debugs">Debug</string>
     <string name="no_jury_duty">No\nJury\nDuty</string>
+    <string name="no_jury_duty_notice">You do not have jury duty</string>
+    <string name="jury_duty_notice_title">Jury duty</string>
 </resources>

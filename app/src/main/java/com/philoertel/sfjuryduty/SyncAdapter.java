@@ -115,14 +115,14 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
     }
 
     private static void createNegativeNotification(Context context, int dutyIndex) {
-        createNotification(context, dutyIndex, "You do not have jury duty");
+        createNotification(context, dutyIndex, context.getString(R.string.no_jury_duty_notice));
     }
 
     private static void createNotification(Context context, int dutyIndex, String message) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context);
         mBuilder.setSmallIcon(R.drawable.ic_action_add)
-                .setContentTitle("Jury duty")
+                .setContentTitle(context.getString(R.string.jury_duty_notice_title))
                 .setContentText(message)
                 .setAutoCancel(true);
         Intent dutyIntent = new Intent(context, DutyActivity.class);
