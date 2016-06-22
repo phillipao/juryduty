@@ -1,16 +1,12 @@
 package com.philoertel.sfjuryduty;
 
 import android.accounts.Account;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SyncResult;
 import android.os.Bundle;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
@@ -98,46 +94,14 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
             for (Instructions instructions : newSet) {
                 if (duty.overlapsWith(instructions)) {
                     if (duty.calledBy(instructions)) {
-                        createPositiveNotification(getContext(), i);
+                        Notifier.createPositiveNotification(getContext(), i, duty);
                     } else {
-                        createNegativeNotification(getContext(), i);
+                        Notifier.createNegativeNotification(getContext(), i, duty);
                     }
                 }
             }
         }
 
         Log.d(TAG, "Done syncing");
-    }
-
-    static void createPositiveNotification(Context context, int dutyIndex) {
-        createNotification(context, dutyIndex,
-                "Looks like you got jury duty. Click for details...");
-    }
-
-    private static void createNegativeNotification(Context context, int dutyIndex) {
-        createNotification(context, dutyIndex, context.getString(R.string.no_jury_duty_notice));
-    }
-
-    private static void createNotification(Context context, int dutyIndex, String message) {
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(context);
-        mBuilder.setSmallIcon(R.drawable.ic_action_add)
-                .setContentTitle(context.getString(R.string.jury_duty_notice_title))
-                .setContentText(message)
-                .setAutoCancel(true);
-        Intent dutyIntent = new Intent(context, DutyActivity.class);
-        dutyIntent.putExtra(DutyActivity.DUTY_ID_EXTRA, dutyIndex);
-        PendingIntent dutyPendingIntent =
-                PendingIntent.getActivity(
-                        context,
-                        0,
-                        dutyIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-        mBuilder.setContentIntent(dutyPendingIntent);
-        int mNotificationId = 1;
-        NotificationManager mNotifyMgr =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotifyMgr.notify(mNotificationId, mBuilder.build());
     }
 }

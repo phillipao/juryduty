@@ -20,4 +20,20 @@
         android:onClick="fireNoDataAlarm"
         android:layout_below="@+id/toolbar" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/has_duty_debug_button_title"
+        android:id="@+id/has_duty_debug_button"
+        android:onClick="fireHasDutyNotification"
+        android:layout_below="@id/no_data_debug_button" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/has_not_duty_debug_button_title"
+        android:id="@+id/has_no_duty_debug_button"
+        android:onClick="fireHasNotDutyNotification"
+        android:layout_below="@id/has_duty_debug_button" />
+
 </RelativeLayout>

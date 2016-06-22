@@ -10,8 +10,8 @@
     <string name="duties_title">All duties</string>
     <string name="days_left_label">days until jury duty</string>
     <string name="google_app_id">1:27694025622:android:9e356c5ff3208932</string>
-    <string name="no_data_notification_text">Juror instructions haven\'t been posted for tomorrow.
-        Click here to check the website.
+    <string name="no_data_notification_text">Juror instructions haven\'t been posted for tomorrow,
+        %1$s. Click here to check the website.
     </string>
     <string name="jury_duty_notification_title">Jury duty</string>
     <string name="toast_saved">Saved!</string>
@@ -20,6 +20,13 @@
     <string name="no_data_alarm_debug_button_title">No data alarm</string>
     <string name="action_debugs">Debug</string>
     <string name="no_jury_duty">No\nJury\nDuty</string>
-    <string name="no_jury_duty_notice">You do not have jury duty</string>
+    <string name="no_jury_duty_notice">You do not have jury duty on %1$s.</string>
     <string name="jury_duty_notice_title">Jury duty</string>
+    <string name="jury_duty_notice">You have jury duty on %1$s. Click for details…</string>
+    <string name="has_duty_debug_button_title">Has Duty notification</string>
+    <string name="has_not_duty_debug_button_title">Has No Duty notification</string>
+    <string name="this_week">This week</string>
+    <string name="not_started_yet">Not started yet.</string>
+    <string name="ended_yesterday">Ended yesterday</string>
+    <string name="ended_n_days_ago">Ended %1$s days ago</string>
 </resources>

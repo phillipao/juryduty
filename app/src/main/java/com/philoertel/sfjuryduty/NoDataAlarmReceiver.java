@@ -10,6 +10,7 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 
 import java.util.Collection;
 
@@ -33,7 +34,7 @@ public class NoDataAlarmReceiver extends BroadcastReceiver {
         Log.d(TAG,
                 "Instructions " + (hasInstructions ? "were" : "were not") + " present for " + day);
         if (!hasInstructions) {
-            createNotification(context);
+            createNotification(context, day);
         }
         // If not called, set an alarm for the following day.
     }
@@ -47,13 +48,16 @@ public class NoDataAlarmReceiver extends BroadcastReceiver {
         return false;
     }
 
-    private void createNotification(Context context) {
+    private void createNotification(Context context, DateTime day) {
+        String notificationText = context.getString(R.string.no_data_notification_text,
+                DateTimeFormat.forPattern("MM/dd/yyyy").print(day));
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context);
         mBuilder.setSmallIcon(R.drawable.ic_action_add)
                 .setContentTitle(context.getString(R.string.jury_duty_notification_title))
-                .setContentText(context.getString(R.string.no_data_notification_text))
-                .setAutoCancel(true);
+                .setContentText(notificationText)
+                .setAutoCancel(true)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
         Intent urlIntent = new Intent(Intent.ACTION_VIEW).setType("text/html").setData(
                 Uri.parse("http://www.sfsuperiorcourt.org/divisions/jury-services/jury-reporting"));
         PendingIntent dutyPendingIntent =

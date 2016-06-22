@@ -86,7 +86,7 @@ public class AddDutyActivity extends AppCompatActivity {
         List<Instructions> instructionses = loader.readInstructions();
         for (Instructions instructions : instructionses) {
             if (duty.calledBy(instructions)) {
-                SyncAdapter.createPositiveNotification(this, newDutyIndex);
+                Notifier.createPositiveNotification(this, newDutyIndex, duty);
             }
         }
 

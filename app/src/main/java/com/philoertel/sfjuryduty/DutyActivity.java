@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
@@ -72,7 +71,7 @@ public class DutyActivity extends AppCompatActivity {
                     (RelativeLayout) findViewById(R.id.dutyLayout));
 
             TextView daysAgoView = (TextView) findViewById(R.id.daysAgoView);
-            daysAgoView.setText("This week");
+            daysAgoView.setText(R.string.this_week);
 
         }
         TextView groupView = (TextView) findViewById(R.id.group);
@@ -81,13 +80,13 @@ public class DutyActivity extends AppCompatActivity {
 
     private String summarizeDutyTime(int startDaysAhead) {
         if (startDaysAhead > 2) {
-            return "Not started yet.";
+            return getString(R.string.not_started_yet);
         } else if (startDaysAhead > -4) {
-            return "This week.";
+            return getString(R.string.this_week);
         } else if (startDaysAhead == -5) {
-            return "Ended yesterday";
+            return getString(R.string.ended_yesterday);
         } else {
-            return String.format("Ended %s days ago", -startDaysAhead);
+            return getString(R.string.ended_n_days_ago, -startDaysAhead);
         }
     }
 
@@ -118,7 +117,6 @@ public class DutyActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_duty, menu);
         return true;
-
     }
 
     @Override

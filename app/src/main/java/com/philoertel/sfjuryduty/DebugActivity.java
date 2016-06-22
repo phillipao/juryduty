@@ -8,6 +8,8 @@ import android.view.View;
 
 import org.joda.time.DateTime;
 
+import java.util.List;
+
 public class DebugActivity extends AppCompatActivity {
 
     private static final String TAG = "DebugActivity";
@@ -31,5 +33,21 @@ public class DebugActivity extends AppCompatActivity {
         Intent alarmIntent = new Intent(this, NoDataAlarmReceiver.class);
         alarmIntent.putExtra(NoDataAlarmReceiver.EXTRA_DATE, DateTime.now());
         sendBroadcast(alarmIntent);
+    }
+
+    public void fireHasDutyNotification(View view) {
+        DutiesLoader dutiesLoader = new DutiesLoader(getFilesDir());
+        List<Duty> duties = dutiesLoader.readDuties();
+        if (!duties.isEmpty()) {
+            Notifier.createPositiveNotification(this, 0, duties.get(0));
+        }
+    }
+
+    public void fireHasNotDutyNotification(View view) {
+        DutiesLoader dutiesLoader = new DutiesLoader(getFilesDir());
+        List<Duty> duties = dutiesLoader.readDuties();
+        if (!duties.isEmpty()) {
+            Notifier.createNegativeNotification(this, 0, duties.get(0));
+        }
     }
 }
