@@ -32,19 +32,39 @@ public class DutiesActivity extends AppCompatActivity {
         setupListViewListener(lvDuties);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        duties = dutiesLoader.readDuties();
-        duties = new ArrayList<>();
-        dutiesAdapter.notifyDataSetChanged();
-    }
-
     private void initToolbar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.duties_title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setupListViewListener(ListView lvDuties) {
+        lvDuties.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), DutyActivity.class);
+                intent.putExtra(DutyActivity.DUTY_ID_EXTRA, position);
+                startActivity(intent);
+            }
+        });
+        lvDuties.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                duties.remove(position);
+                dutiesAdapter.notifyDataSetChanged();
+                dutiesLoader.saveDuties(duties);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        duties = dutiesLoader.readDuties();
+        dutiesAdapter.clear();
+        dutiesAdapter.addAll(duties);
     }
 
     @Override
@@ -72,26 +92,6 @@ public class DutiesActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
-    }
-
-    private void setupListViewListener(ListView lvDuties) {
-        lvDuties.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), DutyActivity.class);
-                intent.putExtra(DutyActivity.DUTY_ID_EXTRA, position);
-                startActivity(intent);
-            }
-        });
-        lvDuties.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                duties.remove(position);
-                dutiesAdapter.notifyDataSetChanged();
-                dutiesLoader.saveDuties(duties);
-                return true;
-            }
-        });
     }
 
     public void onAddButtonClick(View v) {
