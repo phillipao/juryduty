@@ -16,20 +16,24 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class DutyActivity extends AppCompatActivity {
     private static final String TAG = "DutyActivity";
     public static final String DUTY_ID_EXTRA = "com.philoertel.sfjuryduty.DUTY";
 
+    @Inject DutiesLoader dutiesLoader;
+    @Inject InstructionsLoader instructionsLoader;
     private Duty mDuty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        JuryDutyApplication.inject(this);
         setContentView(R.layout.activity_duty);
 
         Intent intent = getIntent();
         int position =  intent.getIntExtra(DUTY_ID_EXTRA, 0);
-        DutiesLoader dutiesLoader = new DutiesLoader(getFilesDir());
         List<Duty> duties = dutiesLoader.readDuties();
         mDuty = duties.get(position);
 
@@ -61,7 +65,6 @@ public class DutyActivity extends AppCompatActivity {
             TextView daysAgoView = (TextView) findViewById(R.id.daysAgoView);
             daysAgoView.setText(summarizeDutyTime(daysAhead)); // how many days ago it ended
 
-            InstructionsLoader instructionsLoader = new InstructionsLoader(getFilesDir());
             List<Instructions> instructionses = instructionsLoader.readInstructions();
             String groupCalledSummary = summarizeDutyOutcome(instructionses);
             TextView groupCalledView = (TextView) findViewById(R.id.groupCalledView);

@@ -14,7 +14,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".JuryDutyApplication">
         <activity android:name=".DutiesActivity">
         </activity>
         <activity
@@ -38,6 +39,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".DebugActivity">
         </activity>
 
         <provider
@@ -79,8 +82,5 @@
         </receiver>
         <receiver android:name="NoDataAlarmReceiver">
         </receiver>
-
-        <activity android:name=".DebugActivity">
-        </activity>
     </application>
 </manifest>
