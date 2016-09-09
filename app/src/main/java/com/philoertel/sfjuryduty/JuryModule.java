@@ -2,8 +2,12 @@ package com.philoertel.sfjuryduty;
 
 import android.app.Application;
 
+import org.joda.time.DateTime;
+
 import dagger.Module;
 import dagger.Provides;
+
+import static com.philoertel.sfjuryduty.Annotations.Now;
 
 /** Module for providing dependencies. */
 @Module
@@ -23,5 +27,11 @@ public class JuryModule {
     @Provides
     InstructionsLoader provideInstructionsLoader() {
         return new InstructionsLoader(application.getFilesDir());
+    }
+
+    @Provides
+    @Now
+    DateTime provideNowDateTime() {
+        return new DateTime();
     }
 }

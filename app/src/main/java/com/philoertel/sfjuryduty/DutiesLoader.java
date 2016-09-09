@@ -34,7 +34,7 @@ class DutiesLoader {
             try {
                 dutiesFile.createNewFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         ArrayList<String> lines;

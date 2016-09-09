@@ -13,6 +13,7 @@ import com.google.api.server.spi.response.CollectionResponse;
 
 import java.util.List;
 import java.util.logging.Logger;
+
 import javax.inject.Named;
 
 import static com.philoertel.sfjuryduty.backend.OfyService.ofy;
