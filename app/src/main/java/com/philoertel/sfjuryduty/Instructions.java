@@ -25,7 +25,7 @@ import java.util.List;
  */
 @DynamoDBTable(tableName = "Instructions")
 @JsonIgnoreProperties(ignoreUnknown = true)
-class Instructions {
+public class Instructions {
 
     // Reporting instructions implicitly refer to US/Pacific time.
     private static final DateTimeFormatter formatter = DateTimeFormat.forPattern(

@@ -29,7 +29,7 @@ public class DebugActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    public void fireNoDataAlarm(View v) {
+    public void fireNoDataAlarm(View view) {
         Intent alarmIntent = new Intent(this, NoDataAlarmReceiver.class);
         alarmIntent.putExtra(NoDataAlarmReceiver.EXTRA_DATE, DateTime.now());
         sendBroadcast(alarmIntent);
