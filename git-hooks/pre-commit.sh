@@ -13,4 +13,3 @@
 
 ./gradlew test
 exit $?
-
