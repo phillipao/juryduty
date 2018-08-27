@@ -30,7 +30,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(path: ':backend', configuration: 'android-endpoints')
 
     compile 'com.amazonaws:aws-android-sdk-core:2.2.12'
     compile 'com.amazonaws:aws-android-sdk-cognito:2.2.12'

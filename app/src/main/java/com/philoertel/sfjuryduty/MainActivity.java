@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import com.philoertel.sfjuryduty.accounts.GenericAccountService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,6 +65,5 @@ public class MainActivity extends AppCompatActivity {
         // Disable sync backoff and ignore sync preferences. In other words...perform sync NOW!
         b.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
         b.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-        ContentResolver.requestSync(GenericAccountService.GetAccount(ACCOUNT_TYPE), AUTHORITY, b);
     }
 }

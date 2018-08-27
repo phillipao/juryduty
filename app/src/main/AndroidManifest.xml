@@ -49,15 +49,7 @@
             android:exported="true"
             android:syncable="true">
         </provider>
-        <service
-            android:name=".AuthenticatorService">
-            <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator"/>
-            </intent-filter>
-            <meta-data
-                android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator"/>
-        </service>
+
         <service
             android:name=".SyncService"
             android:exported="true">
