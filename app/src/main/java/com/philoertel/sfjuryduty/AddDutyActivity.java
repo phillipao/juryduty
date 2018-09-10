@@ -27,6 +27,7 @@ public class AddDutyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((JuryDutyApplication) getApplication()).getComponent().inject(this);
         setContentView(R.layout.activity_add_duty);
         dutiesLoader = new DutiesLoader(getFilesDir());
         duties = dutiesLoader.readDuties();
