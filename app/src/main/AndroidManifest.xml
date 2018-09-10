@@ -43,36 +43,12 @@
         <activity android:name=".DebugActivity">
         </activity>
 
-        <provider
-            android:name=".StubProvider"
-            android:authorities="com.philoertel.sfjuryduty.provider"
-            android:exported="true"
-            android:syncable="true">
-        </provider>
-
-        <service
-            android:name=".SyncService"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.content.SyncAdapter"/>
-            </intent-filter>
-            <meta-data android:name="android.content.SyncAdapter"
-                       android:resource="@xml/syncadapter"/>
-        </service>
-        <service android:name=".accounts.GenericAccountService">
-            <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator"/>
-            </intent-filter>
-            <meta-data android:name="android.accounts.AccountAuthenticator"
-                       android:resource="@xml/authenticator"/>
-        </service>
-
         <receiver android:name=".BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-        <receiver android:name="NoDataAlarmReceiver">
+        <receiver android:name=".CheckInAlarmReceiver">
         </receiver>
     </application>
 </manifest>

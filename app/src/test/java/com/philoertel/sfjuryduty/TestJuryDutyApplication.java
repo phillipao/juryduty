@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
  * Created by poertel on 8/16/16.
  */
 public class TestJuryDutyApplication extends JuryDutyApplication {
+    static CheckInAlarmSetter checkInAlarmSetter;
     static DutiesLoader dutiesLoader;
     static InstructionsLoader instructionsLoader;
     static DateTime now;
@@ -32,6 +33,22 @@ public class TestJuryDutyApplication extends JuryDutyApplication {
             public void inject(DutyActivity activity) {
                 activity.mDutiesLoader = dutiesLoader;
                 activity.mNow = now;
+            }
+
+            @Override
+            public void inject(AddDutyActivity activity) {
+                activity.checkInAlarmSetter = checkInAlarmSetter;
+            }
+
+            @Override
+            public void inject(BootCompletedReceiver receiver) {
+                receiver.checkInAlarmSetter = checkInAlarmSetter;
+            }
+
+            @Override
+            public void inject(CheckInAlarmReceiver receiver) {
+                receiver.mCheckInAlarmSetter = checkInAlarmSetter;
+                receiver.mNow = now;
             }
         };
     }

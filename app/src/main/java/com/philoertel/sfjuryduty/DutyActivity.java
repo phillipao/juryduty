@@ -58,7 +58,7 @@ public class DutyActivity extends AppCompatActivity {
         int daysAhead = Days.daysBetween(normalizedNow,
                 new DateTime(mDuty.getDate().getTime())).getDays();
 
-        if (daysAhead > 0) {
+        if (daysAhead > 1) {
             getLayoutInflater().inflate(R.layout.view_future_duty, dutyLayout);
 
             TextView daysLeftView = (TextView) findViewById(R.id.daysLeftView);

@@ -62,14 +62,14 @@ public class DutyActivityTest {
     }
 
     @Test
-    public void tomorrow() {
-        TestJuryDutyApplication.now = new DateTime(2016, 1, 3, 12, 0,
+    public void inTwoDays() {
+        TestJuryDutyApplication.now = new DateTime(2016, 1, 2, 12, 0,
                 DateTimeZone.forID("US/Pacific"));
         DutyActivity activity = Robolectric.buildActivity(DutyActivity.class).withIntent(
                 INTENT).create().get();
 
         TextView daysLeftView = (TextView) activity.findViewById(R.id.daysLeftView);
-        assertThat(daysLeftView.getText().toString()).isEqualTo("1");
+        assertThat(daysLeftView.getText().toString()).isEqualTo("2");
     }
 
     @Test

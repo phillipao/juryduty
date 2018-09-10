@@ -29,9 +29,9 @@ public class DebugActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    public void fireNoDataAlarm(View view) {
-        Intent alarmIntent = new Intent(this, NoDataAlarmReceiver.class);
-        alarmIntent.putExtra(NoDataAlarmReceiver.EXTRA_DATE, DateTime.now());
+    public void fireCheckInAlarm(View view) {
+        Intent alarmIntent = new Intent(this, CheckInAlarmReceiver.class);
+        alarmIntent.putExtra(CheckInAlarmReceiver.EXTRA_DATE, DateTime.now());
         sendBroadcast(alarmIntent);
     }
 

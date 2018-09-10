@@ -15,9 +15,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class AddDutyActivity extends AppCompatActivity {
     private DutiesLoader dutiesLoader;
     private ArrayList<Duty> duties;
+
+    @Inject
+    CheckInAlarmSetter checkInAlarmSetter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +95,7 @@ public class AddDutyActivity extends AppCompatActivity {
             }
         }
 
-        new NoDataAlarmSetter().setAlarms(this);
+        checkInAlarmSetter.setAlarms(this);
 
         Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_saved, Toast.LENGTH_SHORT);
         toast.show();

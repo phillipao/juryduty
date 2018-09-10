@@ -17,7 +17,7 @@
     <string name="toast_saved">Saved!</string>
     <string name="toast_canceled">Canceled</string>
     <string name="debug_view_title">Debug</string>
-    <string name="no_data_alarm_debug_button_title">No data alarm</string>
+    <string name="check_in_alarm_debug_button_title">Check in</string>
     <string name="action_debugs">Debug</string>
     <string name="no_jury_duty">No\nJury\nDuty</string>
     <string name="no_jury_duty_notice">You do not have jury duty on %1$s.</string>

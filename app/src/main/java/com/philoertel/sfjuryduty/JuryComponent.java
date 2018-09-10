@@ -16,5 +16,10 @@ public interface JuryComponent {
 
     @Now DateTime provideNowDateTime();
 
+    void inject(AddDutyActivity activity);
+
+    void inject(BootCompletedReceiver receiver);
+
+    void inject(CheckInAlarmReceiver receiver);
     void inject(DutyActivity activity);
 }

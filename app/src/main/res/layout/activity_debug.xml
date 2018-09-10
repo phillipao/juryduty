@@ -15,9 +15,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/no_data_alarm_debug_button_title"
+        android:onClick="fireCheckInAlarm"
         android:id="@+id/no_data_debug_button"
-        android:onClick="fireNoDataAlarm"
+        android:text="@string/check_in_alarm_debug_button_title"
         android:layout_below="@+id/toolbar" />
 
     <Button
