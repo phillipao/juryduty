@@ -5,8 +5,13 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.NotificationCompat;
+import android.text.format.DateFormat;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.text.SimpleDateFormat;
 
 /**
  * Static class that creates notifications.
@@ -14,12 +19,19 @@ import org.joda.time.DateTime;
 public class Notifier {
     static void createPositiveNotification(Context context, int dutyIndex, DateTime dateTime) {
         createNotification(context, dutyIndex,
-                context.getString(R.string.jury_duty_notice, dateTime));
+                context.getString(R.string.jury_duty_notice, formatDate(context, dateTime)));
     }
 
     static void createNegativeNotification(Context context, int dutyIndex, DateTime dateTime) {
         createNotification(context, dutyIndex,
-                context.getString(R.string.no_jury_duty_notice, dateTime));
+                context.getString(R.string.no_jury_duty_notice, formatDate(context, dateTime)));
+    }
+
+    private static String formatDate(Context context, DateTime dateTime) {
+        SimpleDateFormat format = (SimpleDateFormat) DateFormat.getDateFormat(context.getApplicationContext());
+        String pattern = format.toPattern();
+        DateTimeFormatter fmt = DateTimeFormat.forPattern(pattern);
+        return dateTime.toString(fmt);
     }
 
     private static void createNotification(Context context, int dutyIndex, String message) {
