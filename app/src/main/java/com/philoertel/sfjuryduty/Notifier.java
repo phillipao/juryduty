@@ -6,18 +6,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.NotificationCompat;
 
+import org.joda.time.DateTime;
+
 /**
  * Static class that creates notifications.
  */
 public class Notifier {
-    static void createPositiveNotification(Context context, int dutyIndex, Duty duty) {
+    static void createPositiveNotification(Context context, int dutyIndex, DateTime dateTime) {
         createNotification(context, dutyIndex,
-                context.getString(R.string.jury_duty_notice, duty.getDate()));
+                context.getString(R.string.jury_duty_notice, dateTime));
     }
 
-    static void createNegativeNotification(Context context, int dutyIndex, Duty duty) {
+    static void createNegativeNotification(Context context, int dutyIndex, DateTime dateTime) {
         createNotification(context, dutyIndex,
-                context.getString(R.string.no_jury_duty_notice, duty.getDate()));
+                context.getString(R.string.no_jury_duty_notice, dateTime));
     }
 
     private static void createNotification(Context context, int dutyIndex, String message) {

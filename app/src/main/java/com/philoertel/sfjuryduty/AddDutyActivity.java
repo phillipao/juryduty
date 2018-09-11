@@ -88,20 +88,25 @@ public class AddDutyActivity extends AppCompatActivity {
         duties.add(duty);
         dutiesLoader.saveDuties(duties);
 
-        InstructionsLoader loader = new InstructionsLoader(getFilesDir());
-        List<Instructions> instructionses = loader.readInstructions();
-        for (Instructions instructions : instructionses) {
-            if (duty.calledBy(instructions)) {
-                Notifier.createPositiveNotification(this, newDutyIndex, duty);
-            }
-        }
-
-        checkInAlarmSetter.setAlarms(this);
+        setAlarms(duty, newDutyIndex);
 
         Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_saved, Toast.LENGTH_SHORT);
         toast.show();
         Intent intent = new Intent(getApplicationContext(), DutyActivity.class);
         intent.putExtra(DutyActivity.DUTY_ID_EXTRA, newDutyIndex);
         startActivity(intent);
+    }
+
+    private void setAlarms(Duty duty, int newDutyIndex) {
+        InstructionsLoader loader = new InstructionsLoader(getFilesDir());
+        List<Instructions> instructionses = loader.readInstructions();
+        for (Instructions instructions : instructionses) {
+            if (duty.calledBy(instructions)) {
+                Notifier.createPositiveNotification(this, newDutyIndex, instructions.getDateTime());
+                return;  // no point setting alarms, we were called!
+            }
+        }
+
+        checkInAlarmSetter.setAlarms(this);
     }
 }

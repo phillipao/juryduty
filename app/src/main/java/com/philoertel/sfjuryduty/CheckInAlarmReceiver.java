@@ -101,10 +101,10 @@ public class CheckInAlarmReceiver extends BroadcastReceiver {
                     Duty duty = duties.get(i);
                     if (duty.overlapsWith(parsedInstructions)) {
                         if (duty.calledBy(parsedInstructions)) {
-                            Notifier.createPositiveNotification(context, i, duty);
+                            Notifier.createPositiveNotification(context, i, parsedInstructions.getDateTime());
                             return;  // no more alarms! you've been called!
                         } else {
-                            Notifier.createNegativeNotification(context, i, duty);
+                            Notifier.createNegativeNotification(context, i, parsedInstructions.getDateTime());
                         }
                     }
                 }

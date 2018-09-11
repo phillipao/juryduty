@@ -39,7 +39,7 @@ public class DebugActivity extends AppCompatActivity {
         DutiesLoader dutiesLoader = new DutiesLoader(getFilesDir());
         List<Duty> duties = dutiesLoader.readDuties();
         if (!duties.isEmpty()) {
-            Notifier.createPositiveNotification(this, 0, duties.get(0));
+            Notifier.createPositiveNotification(this, 0, DateTime.now());
         }
     }
 
@@ -47,7 +47,7 @@ public class DebugActivity extends AppCompatActivity {
         DutiesLoader dutiesLoader = new DutiesLoader(getFilesDir());
         List<Duty> duties = dutiesLoader.readDuties();
         if (!duties.isEmpty()) {
-            Notifier.createNegativeNotification(this, 0, duties.get(0));
+            Notifier.createNegativeNotification(this, 0, DateTime.now());
         }
     }
 }
