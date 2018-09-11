@@ -48,6 +48,8 @@ public class DutyActivityTest {
         ArrayList<Duty> duties = new ArrayList<>();
         duties.add(duty);
         when(mockDutiesLoader.readDuties()).thenReturn(duties);
+        ArrayList<Instructions> instructions = new ArrayList<>();
+        when(mockInstructionsLoader.readInstructions()).thenReturn(instructions);
     }
 
     @Test

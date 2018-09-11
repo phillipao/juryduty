@@ -32,6 +32,7 @@ public class TestJuryDutyApplication extends JuryDutyApplication {
             @Override
             public void inject(DutyActivity activity) {
                 activity.mDutiesLoader = dutiesLoader;
+                activity.mInstructionsLoader = instructionsLoader;
                 activity.mNow = now;
             }
 

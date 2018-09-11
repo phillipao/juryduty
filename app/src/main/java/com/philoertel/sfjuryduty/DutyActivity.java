@@ -15,11 +15,14 @@ import org.joda.time.ReadableInstant;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import static com.philoertel.sfjuryduty.Annotations.Now;
+import static java.text.DateFormat.getDateInstance;
 
 public class DutyActivity extends AppCompatActivity {
     private static final String TAG = "DutyActivity";
@@ -74,10 +77,13 @@ public class DutyActivity extends AppCompatActivity {
             TextView groupCalledView = (TextView) findViewById(R.id.groupCalledView);
             groupCalledView.setText(groupCalledSummary);
         } else {
-            getLayoutInflater().inflate(R.layout.view_past_duty, dutyLayout);
+            getLayoutInflater().inflate(R.layout.view_current_duty, dutyLayout);
 
             TextView daysAgoView = (TextView) findViewById(R.id.daysAgoView);
             daysAgoView.setText(R.string.this_week);
+
+            List<Instructions> instructionses = mInstructionsLoader.readInstructions();
+            summarizeDutyStatus(instructionses);
         }
         TextView groupView = (TextView) findViewById(R.id.group);
         groupView.setText(mDuty.getGroup());
@@ -118,6 +124,33 @@ public class DutyActivity extends AppCompatActivity {
         }
     }
 
+    private void summarizeDutyStatus(Collection<Instructions> instructionses) {
+        Map<DateTime, Instructions> instructionsByDate = new HashMap<>();
+        for (Instructions i : instructionses) {
+            instructionsByDate.put(i.getDateTime(), i);
+        }
+
+        DateTime date = mDuty.getWeekInterval().getStart();
+        setStatusView(date, (TextView) findViewById(R.id.mondayLabelView), instructionsByDate);
+        setStatusView(date.plusDays(1), (TextView) findViewById(R.id.tuesdayLabelView), instructionsByDate);
+        setStatusView(date.plusDays(2), (TextView) findViewById(R.id.wednesdayLabelView), instructionsByDate);
+        setStatusView(date.plusDays(3), (TextView) findViewById(R.id.thursdayLabelView), instructionsByDate);
+        setStatusView(date.plusDays(4), (TextView) findViewById(R.id.fridayLabelView), instructionsByDate);
+    }
+
+    private void setStatusView(DateTime date, TextView textView, Map<DateTime, Instructions> instructionsByDate) {
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+        String dayOfTheWeek = sdf.format(date.toDate());
+        Instructions instructions = instructionsByDate.get(date);
+        if (instructions == null) {
+            textView.setText(getString(R.string.no_data, dayOfTheWeek));
+        } else if (instructions.getReportingGroups().contains(mDuty.getGroup())) {
+            textView.setText(getString(R.string.called, dayOfTheWeek));
+        } else {
+            textView.setText(getString(R.string.not_called, dayOfTheWeek));
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_duty, menu);
@@ -155,6 +188,6 @@ public class DutyActivity extends AppCompatActivity {
 
     private String formatDate(Duty duty) {
         return String.format("Week of %s",
-                SimpleDateFormat.getDateInstance().format(duty.getDate()));
+                getDateInstance().format(duty.getDate()));
     }
 }

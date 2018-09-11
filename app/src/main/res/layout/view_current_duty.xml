@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/daysAgoView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        tools:text="This week"
+        android:textSize="40sp"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/daysAgoView"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/mondayLabelView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Monday: no data" />
+
+        <TextView
+            android:id="@+id/tuesdayLabelView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Tuesday: no data" />
+
+        <TextView
+            android:id="@+id/wednesdayLabelView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Wednesday: no data" />
+
+        <TextView
+            android:id="@+id/thursdayLabelView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Thursday: no data" />
+
+        <TextView
+            android:id="@+id/fridayLabelView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Friday: no data" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/groupLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Group"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="12dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="200"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_toEndOf="@+id/groupLabel"
+        android:layout_marginStart="12dp" />
+
+</RelativeLayout>

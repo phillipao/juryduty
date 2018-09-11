@@ -9,6 +9,9 @@
     <string name="edit_view_title">Edit</string>
     <string name="duties_title">All duties</string>
     <string name="days_left_label">days until jury duty</string>
+    <string name="no_data">%1$s: no data</string>
+    <string name="called">%1$s: called</string>
+    <string name="not_called">%1$s: not called</string>
     <string name="google_app_id">1:27694025622:android:9e356c5ff3208932</string>
     <string name="no_data_notification_text">Juror instructions haven\'t been posted for tomorrow,
         %1$s. Click here to check the website.
@@ -28,5 +31,5 @@
     <string name="this_week">This week</string>
     <string name="not_started_yet">Not started yet.</string>
     <string name="ended_yesterday">Ended yesterday</string>
-    <string name="ended_n_days_ago">Ended %1$s days ago</string>
+    <string name="ended_n_days_ago">Ended %1$d days ago</string>
 </resources>
