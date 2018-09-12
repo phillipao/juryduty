@@ -3,7 +3,6 @@
     <string name="title_activity_duty">DutyActivity</string>
     <string name="action_add_duty">New duty</string>
     <string name="action_duties">All duties</string>
-    <string name="action_settings">Settings</string>
     <string name="group_field_label">Group</string>
     <string name="save_button">Save</string>
     <string name="edit_view_title">Edit</string>
@@ -12,7 +11,6 @@
     <string name="no_data">%1$s: no data</string>
     <string name="called">%1$s: called</string>
     <string name="not_called">%1$s: not called</string>
-    <string name="google_app_id">1:27694025622:android:9e356c5ff3208932</string>
     <string name="no_data_notification_text">Juror instructions haven\'t been posted for tomorrow,
         %1$s. Click here to check the website.
     </string>

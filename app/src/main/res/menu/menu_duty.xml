@@ -8,11 +8,6 @@
         android:title="@string/action_duties"
         app:showAsAction="never"/>
 
-    <!-- Settings, should always be in the overflow -->
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        app:showAsAction="never"/>
-
     <item android:id="@+id/action_debug"
           android:title="@string/action_debugs"
           app:showAsAction="never"/>
