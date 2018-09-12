@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 
 public class DutiesActivity extends AppCompatActivity {
@@ -85,6 +87,13 @@ public class DutiesActivity extends AppCompatActivity {
             case R.id.action_debug: {
                 Intent intent = new Intent(getApplicationContext(), DebugActivity.class);
                 startActivity(intent);
+                return true;
+            }
+
+            case R.id.action_refresh: {
+                Intent alarmIntent = new Intent(this, CheckInAlarmReceiver.class);
+                alarmIntent.putExtra(CheckInAlarmReceiver.EXTRA_DATE, DateTime.now());
+                sendBroadcast(alarmIntent);
                 return true;
             }
 

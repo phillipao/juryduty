@@ -29,12 +29,6 @@ public class DebugActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    public void fireCheckInAlarm(View view) {
-        Intent alarmIntent = new Intent(this, CheckInAlarmReceiver.class);
-        alarmIntent.putExtra(CheckInAlarmReceiver.EXTRA_DATE, DateTime.now());
-        sendBroadcast(alarmIntent);
-    }
-
     public void fireHasDutyNotification(View view) {
         DutiesLoader dutiesLoader = new DutiesLoader(getFilesDir());
         List<Duty> duties = dutiesLoader.readDuties();

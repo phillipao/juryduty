@@ -15,18 +15,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="fireCheckInAlarm"
-        android:id="@+id/no_data_debug_button"
-        android:text="@string/check_in_alarm_debug_button_title"
-        android:layout_below="@+id/toolbar" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/has_duty_debug_button_title"
         android:id="@+id/has_duty_debug_button"
         android:onClick="fireHasDutyNotification"
-        android:layout_below="@id/no_data_debug_button" />
+        android:layout_below="@+id/toolbar" />
 
     <Button
         android:layout_width="wrap_content"
