@@ -95,6 +95,7 @@ public class AddDutyActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), DutyActivity.class);
         intent.putExtra(DutyActivity.DUTY_ID_EXTRA, newDutyIndex);
         startActivity(intent);
+        finish();
     }
 
     private void setAlarms(Duty duty, int newDutyIndex) {
