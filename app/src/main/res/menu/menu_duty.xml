@@ -8,6 +8,10 @@
         android:title="@string/action_duties"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/action_delete"
+        android:title="@string/action_delete"
+        app:showAsAction="never"/>
+
     <item android:id="@+id/action_debug"
           android:title="@string/action_debugs"
           app:showAsAction="never"/>

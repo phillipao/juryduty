@@ -31,4 +31,6 @@
     <string name="ended_yesterday">Ended yesterday</string>
     <string name="ended_n_days_ago">Ended %1$d days ago</string>
     <string name="action_refresh">Refresh instructions</string>
+    <string name="action_delete">Delete</string>
+    <string name="toast_deleted">Deleted</string>
 </resources>

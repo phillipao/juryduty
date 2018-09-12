@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -166,20 +167,34 @@ public class DutyActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
-            case R.id.action_debug:
-                intent = new Intent(getApplicationContext(), DebugActivity.class);
-                startActivity(intent);
-                return true;
-
             case R.id.action_duties:
                 intent = new Intent(getApplicationContext(), DutiesActivity.class);
                 startActivity(intent);
                 return true;
 
+            case R.id.action_delete:
+                deleteDuty();
+                Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_deleted, Toast.LENGTH_SHORT);
+                toast.show();
+                finish();
+                return true;
+
+            case R.id.action_debug:
+                intent = new Intent(getApplicationContext(), DebugActivity.class);
+                startActivity(intent);
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
-
         }
+    }
+
+    private void deleteDuty() {
+        Intent intent = getIntent();
+        int position =  intent.getIntExtra(DUTY_ID_EXTRA, 0);
+        List<Duty> duties = mDutiesLoader.readDuties();
+        duties.remove(position);
+        mDutiesLoader.saveDuties(duties);
     }
 
     private String formatDate(Duty duty) {

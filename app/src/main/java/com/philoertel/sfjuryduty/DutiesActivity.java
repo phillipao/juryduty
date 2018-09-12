@@ -50,15 +50,6 @@ public class DutiesActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        lvDuties.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                duties.remove(position);
-                dutiesAdapter.notifyDataSetChanged();
-                dutiesLoader.saveDuties(duties);
-                return true;
-            }
-        });
     }
 
     @Override
