@@ -9,10 +9,14 @@ import static com.google.common.truth.Truth.assertThat;
 @RunWith(JUnit4.class)
 public class ParserTest {
 
-//    @Before
-//    public void setup() throws Exception {
-//        fileContents = getStringFromResourceFile("/com/philoertel/sfjuryduty/reporting.html");
-//    }
+    @Test
+    public void parseGroups() {
+        Instructions instructions = Parser.parseInstructions(fileContents);
+        assertThat(instructions.getDateString()).isEqualTo("20180828");
+        assertThat(instructions.getReportingGroups()).containsExactly(
+                "605", "619", "601", "613", "617", "616", "620", "625", "614", "627",
+                "629");
+    }
 
     private static final String fileContents = "<!DOCTYPE html>\n" +
             "<html lang=\"en\" dir=\"ltr\">\n" +
@@ -392,32 +396,4 @@ public class ParserTest {
             "\n" +
             "</body>\n" +
             "</html>\n";
-
-//    // From http://www.java2s.com/Code/Java/File-Input-Output/ConvertInputStreamtoString.htm.
-//    private static String getStringFromResourceFile(String filePath) throws Exception {
-//        try (InputStream is = ParserTest.class.getResourceAsStream(filePath)) {
-//            return convertStreamToString(is);
-//        }
-//    }
-//
-//    // From http://www.java2s.com/Code/Java/File-Input-Output/ConvertInputStreamtoString.htm.
-//    private static String convertStreamToString(InputStream is) throws IOException {
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-//        StringBuilder sb = new StringBuilder();
-//        String line = null;
-//        while ((line = reader.readLine()) != null) {
-//            sb.append(line).append("\n");
-//        }
-//        reader.close();
-//        return sb.toString();
-//    }
-
-    @Test
-    public void parseGroups() {
-        Instructions instructions = Parser.parseInstructions(fileContents);
-        assertThat(instructions.getDateString()).isEqualTo("20180828");
-        assertThat(instructions.getReportingGroups()).containsExactly(
-                "605", "619", "601", "613", "617", "616", "620", "625", "614", "627",
-                "629");
-    }
 }

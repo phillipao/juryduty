@@ -20,12 +20,9 @@ public class Parser {
      * Parses an Instructions object from the text content of the reporting instructions website.\
      */
     static Instructions parseInstructions(String content) {
-//        if (BuildConfig.DEBUG) {
-//            Log.d(TAG, String.format("Content is %d bytes", content.length()));
-//        }
         // ?s causes . to match across newlines
         // .*? is the non-greedy version of .*
-        Pattern p = Pattern.compile("(?s)GROUPS REPORTING:(.*?)GROUPS ON STANDBY:");
+        Pattern p = Pattern.compile("(?s)GROUPS REPORTING:(.*?)GROUPS");
         Matcher m = p.matcher(content);
         DateTime date = null;
         ArrayList<String> groups = new ArrayList<>();
