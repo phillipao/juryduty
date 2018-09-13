@@ -6,11 +6,15 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
 import org.apache.commons.io.FileUtils;
+import org.joda.time.DateTime;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class responsible for loading Instructions objects from disk and saving back to disk.
@@ -58,6 +62,15 @@ class InstructionsLoader {
             newInstructions.add(instructions);
         }
         return newInstructions;
+    }
+
+    /** Transforms a Collection of Instructions to a map keyed by date. */
+    public static Map<DateTime, Instructions> toMapByDate(Collection<Instructions> instructionses) {
+        Map<DateTime, Instructions> map = new HashMap<>();
+        for (Instructions i : instructionses) {
+            map.put(i.getDateTime(), i);
+        }
+        return map;
     }
 
     public void saveInstructions(List<Instructions> instructionss) {

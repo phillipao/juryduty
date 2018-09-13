@@ -8,7 +8,10 @@ import android.util.Log;
 
 import org.joda.time.DateTime;
 
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -49,39 +52,48 @@ class CheckInAlarmSetter {
     }
 
     public void setAlarms(Context context) {
-        dlog("Setting alarms");
         DutiesLoader dutiesLoader = new DutiesLoader(context.getFilesDir());
-        Collection<Duty> duties = dutiesLoader.readDuties();
+        List<Duty> duties = dutiesLoader.readDuties();
         dlog("Loaded %d duties", duties.size());
+        sortByDate(duties);
+
         InstructionsLoader instructionsLoader = new InstructionsLoader(context.getFilesDir());
-        Collection<Instructions> instructionses = instructionsLoader.readInstructions();
-        dlog("Loaded %d instructions", instructionses.size());
+        Map<DateTime, Instructions> instByDate =
+                InstructionsLoader.toMapByDate(instructionsLoader.readInstructions());
+        dlog("Loaded %d instructions", instByDate.size());
+
+        dutyLoop:
         for (Duty duty : duties) {
             if (duty.getWeekInterval().isBefore(mNow)) {
                 dlog("Skipping old week");
                 continue;
             }
             DateTime day = duty.getWeekInterval().getStart();
-            days:
             for (int i = 0; i++ < 5; day = day.plusDays(1)) {
-                for (Instructions instructions : instructionses) {
-                    if (instructions.getDateTime().isEqual(day)) {
-                        if (instructions.getReportingGroups().contains(duty.getGroup())) {
-                            dlog("already called");
-                            break days;  // You won't be called again. Don't set an alarm.
-                        } else {
-                            dlog("instructions already present, but not called");
-                            continue days;
-                        }
+                Instructions instructions = instByDate.get(day);
+                if (instructions != null) {
+                    if (instructions.getReportingGroups().contains(duty.getGroup())) {
+                        dlog("already called");
+                        break;  // You won't be called again. Don't set an alarm.
+                    } else {
+                        dlog("instructions already present, but not called");
+                        continue;
                     }
                 }
-                if (day.minusHours(7).isBefore(mNow)) {
-                    schedule(context, day, mNow.getMillis());
-                } else {
-                    schedule(context, day, day.minusHours(7).getMillis());
+                if (mNow.isAfter(day.plusDays(1))) {
+                    continue;  // too late. missed 'em.
                 }
-                break;  // Just schedule one day
+                schedule(context, day, day.minusHours(7).getMillis());
+                break dutyLoop;  // Just schedule one day
             }
         }
+    }
+
+    private void sortByDate(List<Duty> input) {
+        Collections.sort(input, new Comparator<Duty>() {
+            public int compare(Duty duty1, Duty duty2) {
+                return duty1.getDate().compareTo(duty2.getDate());
+            }
+        });
     }
 }

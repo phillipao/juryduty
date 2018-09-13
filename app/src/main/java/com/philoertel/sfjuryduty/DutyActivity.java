@@ -29,6 +29,7 @@ public class DutyActivity extends AppCompatActivity {
     private static final String TAG = "DutyActivity";
     public static final String DUTY_ID_EXTRA = "com.philoertel.sfjuryduty.DUTY";
 
+    @Inject CheckInAlarmSetter checkInAlarmSetter;
     @Inject DutiesLoader mDutiesLoader;
     @Inject InstructionsLoader mInstructionsLoader;
     @Inject @Now DateTime mNow;
@@ -126,10 +127,8 @@ public class DutyActivity extends AppCompatActivity {
     }
 
     private void summarizeDutyStatus(Collection<Instructions> instructionses) {
-        Map<DateTime, Instructions> instructionsByDate = new HashMap<>();
-        for (Instructions i : instructionses) {
-            instructionsByDate.put(i.getDateTime(), i);
-        }
+        Map<DateTime, Instructions> instructionsByDate =
+                InstructionsLoader.toMapByDate(instructionses);
 
         DateTime date = mDuty.getWeekInterval().getStart();
         setStatusView(date, (TextView) findViewById(R.id.mondayLabelView), instructionsByDate);
@@ -176,6 +175,7 @@ public class DutyActivity extends AppCompatActivity {
                 deleteDuty();
                 Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_deleted, Toast.LENGTH_SHORT);
                 toast.show();
+                checkInAlarmSetter.setAlarms(getApplicationContext());
                 finish();
                 return true;
 

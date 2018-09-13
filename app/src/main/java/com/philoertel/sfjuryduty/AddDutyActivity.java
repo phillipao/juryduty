@@ -21,8 +21,7 @@ public class AddDutyActivity extends AppCompatActivity {
     private DutiesLoader dutiesLoader;
     private ArrayList<Duty> duties;
 
-    @Inject
-    CheckInAlarmSetter checkInAlarmSetter;
+    @Inject CheckInAlarmSetter checkInAlarmSetter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

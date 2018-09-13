@@ -34,6 +34,7 @@ public class DutyActivityTest {
         INTENT.putExtra(DutyActivity.DUTY_ID_EXTRA, 0 /* position */);
     }
 
+    @Mock private CheckInAlarmSetter mockCheckInAlarmSetter;
     @Mock private DutiesLoader mockDutiesLoader;
     @Mock private InstructionsLoader mockInstructionsLoader;
     @Rule public MockitoRule rule = MockitoJUnit.rule();
@@ -41,6 +42,7 @@ public class DutyActivityTest {
 
     @Before
     public void setUp() {
+        TestJuryDutyApplication.checkInAlarmSetter = mockCheckInAlarmSetter;
         TestJuryDutyApplication.dutiesLoader = mockDutiesLoader;
         TestJuryDutyApplication.instructionsLoader = mockInstructionsLoader;
         TestJuryDutyApplication.now = mockNow;
