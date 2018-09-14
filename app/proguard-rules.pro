@@ -30,7 +30,7 @@
  -keepclassmembers public final enum org.codehaus.jackson.annotate.JsonAutoDetect$Visibility {
  public static final org.codehaus.jackson.annotate.JsonAutoDetect$Visibility *; }
 
- -keep public class com.philoertel.sfjuryduty.** {
+ -keep public class com.philoertel.juryduty.** {
    public void set*(***);
    public *** get*();
  }

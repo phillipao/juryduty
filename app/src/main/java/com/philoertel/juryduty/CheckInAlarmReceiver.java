@@ -42,7 +42,7 @@ import static com.philoertel.juryduty.Annotations.Now;
 public class CheckInAlarmReceiver extends BroadcastReceiver {
 
     public static final String EXTRA_DATE =
-            "com.philoertel.sfjuryduty.CheckInAlarmReceiver.EXTRA_DATE";
+            "com.philoertel.juryduty.CheckInAlarmReceiver.EXTRA_DATE";
     public static final String INSTRUCTIONS_URL_STR =
             "https://www.sfsuperiorcourt.org/divisions/jury-services/jury-reporting";
     private static final String TAG = "CheckInAlarmReceiver";
@@ -135,15 +135,6 @@ public class CheckInAlarmReceiver extends BroadcastReceiver {
         } else {
             return false;
         }
-    }
-
-    private boolean hasInstructionsForDay(DateTime day, Collection<Instructions> instructionses) {
-        for (Instructions instructions : instructionses) {
-            if (instructions.getDateTime().isEqual(day)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**

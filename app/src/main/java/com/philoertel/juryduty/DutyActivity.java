@@ -16,7 +16,6 @@ import org.joda.time.ReadableInstant;
 
 import java.text.SimpleDateFormat;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +25,7 @@ import static com.philoertel.juryduty.Annotations.Now;
 import static java.text.DateFormat.getDateInstance;
 
 public class DutyActivity extends AppCompatActivity {
-    private static final String TAG = "DutyActivity";
-    public static final String DUTY_ID_EXTRA = "com.philoertel.sfjuryduty.DUTY";
+    public static final String DUTY_ID_EXTRA = "com.philoertel.juryduty.DUTY";
 
     @Inject CheckInAlarmSetter checkInAlarmSetter;
     @Inject DutiesLoader mDutiesLoader;
