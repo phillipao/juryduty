@@ -1,4 +1,4 @@
-package com.philoertel.sfjuryduty;
+package com.philoertel.juryduty;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package com.philoertel.sfjuryduty;
+package com.philoertel.juryduty;
 
 import android.app.Application;
 
@@ -7,7 +7,7 @@ import org.joda.time.DateTime;
 import dagger.Module;
 import dagger.Provides;
 
-import static com.philoertel.sfjuryduty.Annotations.Now;
+import static com.philoertel.juryduty.Annotations.Now;
 
 /** Module for providing dependencies. */
 @Module

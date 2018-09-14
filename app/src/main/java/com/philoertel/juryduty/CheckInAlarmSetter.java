@@ -1,4 +1,4 @@
-package com.philoertel.sfjuryduty;
+package com.philoertel.juryduty;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -15,7 +15,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import static com.philoertel.sfjuryduty.Annotations.Now;
+import static com.philoertel.juryduty.Annotations.Now;
 
 /**
  * Class to set CheckInAlarms for all pending duties.

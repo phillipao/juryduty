@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.philoertel.sfjuryduty"
+<manifest package="com.philoertel.juryduty"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -24,14 +24,14 @@
             android:parentActivityName=".DutiesActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.philoertel.sfjuryduty.DutiesActivity"/>
+                android:value="com.philoertel.juryduty.DutiesActivity"/>
         </activity>
         <activity
             android:name=".AddDutyActivity"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.philoertel.sfjuryduty.MainActivity"/>
+                android:value="com.philoertel.juryduty.MainActivity"/>
         </activity>
         <activity android:name=".MainActivity">
             <intent-filter>

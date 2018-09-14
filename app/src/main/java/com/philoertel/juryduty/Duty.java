@@ -1,4 +1,4 @@
-package com.philoertel.sfjuryduty;
+package com.philoertel.juryduty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

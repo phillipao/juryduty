@@ -1,10 +1,10 @@
-package com.philoertel.sfjuryduty;
+package com.philoertel.juryduty;
 
 import org.joda.time.DateTime;
 
 import dagger.Component;
 
-import static com.philoertel.sfjuryduty.Annotations.Now;
+import static com.philoertel.juryduty.Annotations.Now;
 
 /**
  * Component for providing dependencies.

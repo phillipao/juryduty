@@ -1,4 +1,4 @@
-package com.philoertel.sfjuryduty;
+package com.philoertel.juryduty;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -29,7 +29,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.net.ssl.HttpsURLConnection;
 
-import static com.philoertel.sfjuryduty.Annotations.Now;
+import static com.philoertel.juryduty.Annotations.Now;
 
 /**
  * Receives an alarm that it's time to check in.

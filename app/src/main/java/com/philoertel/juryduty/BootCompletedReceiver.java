@@ -1,4 +1,4 @@
-package com.philoertel.sfjuryduty;
+package com.philoertel.juryduty;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

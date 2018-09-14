@@ -1,4 +1,4 @@
-package com.philoertel.sfjuryduty;
+package com.philoertel.juryduty;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import static com.philoertel.sfjuryduty.Annotations.Now;
+import static com.philoertel.juryduty.Annotations.Now;
 import static java.text.DateFormat.getDateInstance;
 
 public class DutyActivity extends AppCompatActivity {

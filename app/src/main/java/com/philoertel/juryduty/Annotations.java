@@ -1,4 +1,4 @@
-package com.philoertel.sfjuryduty;
+package com.philoertel.juryduty;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
