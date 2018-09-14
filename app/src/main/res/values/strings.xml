@@ -33,4 +33,5 @@
     <string name="action_refresh">Refresh instructions</string>
     <string name="action_delete">Delete</string>
     <string name="toast_deleted">Deleted</string>
+    <string name="channel_name">Jury Duty notifications</string>
 </resources>

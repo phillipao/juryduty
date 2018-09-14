@@ -1,17 +1,12 @@
 package com.philoertel.juryduty;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +16,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,11 +40,8 @@ public class CheckInAlarmReceiver extends BroadcastReceiver {
     public static final String INSTRUCTIONS_URL_STR =
             "https://www.sfsuperiorcourt.org/divisions/jury-services/jury-reporting";
     private static final String TAG = "CheckInAlarmReceiver";
-    @Inject
-    @Now
-    DateTime mNow;
-    @Inject
-    CheckInAlarmSetter mCheckInAlarmSetter;
+    @Inject @Now DateTime mNow;
+    @Inject CheckInAlarmSetter mCheckInAlarmSetter;
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
@@ -129,42 +120,12 @@ public class CheckInAlarmReceiver extends BroadcastReceiver {
 
     private boolean giveUp(Context context, DateTime day) {
         if (mNow.getHourOfDay() >= 19) {
-            createNotification(context, day);
+            Notifier.createNoDataNotification(context, day);
             mCheckInAlarmSetter.setAlarms(context);
             return true;
         } else {
             return false;
         }
-    }
-
-    /**
-     * Creates a notification that instructions aren't available.
-     */
-    private void createNotification(Context context, DateTime day) {
-        Log.i(TAG, "Giving up for " + day.toString());
-        String notificationText = context.getString(R.string.no_data_notification_text,
-                DateTimeFormat.forPattern("MM/dd/yyyy").print(day));
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(context);
-        mBuilder.setSmallIcon(R.drawable.ic_action_add)
-                .setContentTitle(context.getString(R.string.jury_duty_notification_title))
-                .setContentText(notificationText)
-                .setAutoCancel(true)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
-        Intent urlIntent = new Intent(Intent.ACTION_VIEW).setType("text/html").setData(
-                Uri.parse(INSTRUCTIONS_URL_STR));
-        PendingIntent dutyPendingIntent =
-                PendingIntent.getActivity(
-                        context,
-                        0,
-                        urlIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-        mBuilder.setContentIntent(dutyPendingIntent);
-        int mNotificationId = 1;
-        NotificationManager mNotifyMgr =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotifyMgr.notify(mNotificationId, mBuilder.build());
     }
 
     /**
