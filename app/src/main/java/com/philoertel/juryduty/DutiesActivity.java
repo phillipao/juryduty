@@ -83,7 +83,7 @@ public class DutiesActivity extends AppCompatActivity {
 
             case R.id.action_refresh: {
                 Intent alarmIntent = new Intent(this, CheckInAlarmReceiver.class);
-                alarmIntent.putExtra(CheckInAlarmReceiver.EXTRA_DATE, DateTime.now());
+                alarmIntent.putExtra(CheckInAlarmReceiver.EXTRA_DATE, DateTime.now().toString());
                 sendBroadcast(alarmIntent);
                 return true;
             }

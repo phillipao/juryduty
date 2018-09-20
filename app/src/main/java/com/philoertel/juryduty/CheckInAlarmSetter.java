@@ -38,7 +38,7 @@ class CheckInAlarmSetter {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(
                 Context.ALARM_SERVICE);
         Intent alarmIntent = new Intent(context, CheckInAlarmReceiver.class);
-        alarmIntent.putExtra(CheckInAlarmReceiver.EXTRA_DATE, day);
+        alarmIntent.putExtra(CheckInAlarmReceiver.EXTRA_DATE, day.toString());
         PendingIntent pi = PendingIntent.getBroadcast(context, 0,
                 alarmIntent, 0);
 

@@ -51,7 +51,13 @@ public class CheckInAlarmReceiver extends BroadcastReceiver {
             @Override
             public void run() {
                 Log.d(TAG, "Starting CheckInAlarmReceiver.onReceive");
-                DateTime day = (DateTime) intent.getSerializableExtra(EXTRA_DATE);
+                String dtStr = intent.getStringExtra(EXTRA_DATE);
+                if (dtStr == null) {
+                    Log.e(TAG, "Received null date");
+                    return;
+                }
+                DateTime day = DateTime.parse(dtStr);
+                Log.d(TAG, "Received date " + day);
                 URL instructionsUrl;
                 try {
                     instructionsUrl = new URL(INSTRUCTIONS_URL_STR);
