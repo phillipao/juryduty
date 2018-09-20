@@ -1,8 +1,5 @@
 package com.philoertel.juryduty;
 
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -20,10 +17,7 @@ import java.util.List;
  *
  * <p>This is a representation of the instructions given by the court, whose main purpose is to
  * instruct a set of reporting groups to appear in court.
- *
- * <p>Annotations are included for reading/writing to AWS DynamoDB.
  */
-@DynamoDBTable(tableName = "Instructions")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Instructions {
 
@@ -48,7 +42,6 @@ public class Instructions {
     /**
      * The date in yyyymmdd (ISO 8601 basic) format. All times are Pacific.
      */
-    @DynamoDBHashKey(attributeName = "date")
     public String getDateString() {
         return dateString;
     }
@@ -57,7 +50,6 @@ public class Instructions {
         this.dateString = dateString;
     }
 
-    @DynamoDBAttribute(attributeName = "groups")
     public List<String> getReportingGroups() {
         return reportingGroups;
     }

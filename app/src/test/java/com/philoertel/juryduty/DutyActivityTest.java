@@ -58,7 +58,7 @@ public class DutyActivityTest {
     public void threeDaysFromNow() {
         TestJuryDutyApplication.now = new DateTime(2016, 1, 1, 12, 0,
                 DateTimeZone.forID("US/Pacific"));
-        DutyActivity activity = Robolectric.buildActivity(DutyActivity.class).withIntent(
+        DutyActivity activity = Robolectric.buildActivity(DutyActivity.class,
                 INTENT).create().get();
 
         TextView daysLeftView = (TextView) activity.findViewById(R.id.daysLeftView);
@@ -69,7 +69,7 @@ public class DutyActivityTest {
     public void inTwoDays() {
         TestJuryDutyApplication.now = new DateTime(2016, 1, 2, 12, 0,
                 DateTimeZone.forID("US/Pacific"));
-        DutyActivity activity = Robolectric.buildActivity(DutyActivity.class).withIntent(
+        DutyActivity activity = Robolectric.buildActivity(DutyActivity.class,
                 INTENT).create().get();
 
         TextView daysLeftView = (TextView) activity.findViewById(R.id.daysLeftView);
@@ -80,7 +80,7 @@ public class DutyActivityTest {
     public void startsToday() {
         TestJuryDutyApplication.now = new DateTime(2016, 1, 4, 12, 0,
                 DateTimeZone.forID("US/Pacific"));
-        DutyActivity activity = Robolectric.buildActivity(DutyActivity.class).withIntent(
+        DutyActivity activity = Robolectric.buildActivity(DutyActivity.class,
                 INTENT).create().get();
 
         TextView daysAgoView = (TextView) activity.findViewById(R.id.daysAgoView);
