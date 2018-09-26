@@ -173,7 +173,7 @@ public class DutyActivity extends AppCompatActivity {
                 deleteDuty();
                 Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_deleted, Toast.LENGTH_SHORT);
                 toast.show();
-                checkInAlarmSetter.setAlarms(getApplicationContext());
+                checkInAlarmSetter.setAlarms();
                 finish();
                 return true;
 

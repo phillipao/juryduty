@@ -16,6 +16,6 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        checkInAlarmSetter.setAlarms(context);
+        checkInAlarmSetter.setAlarms();
     }
 }

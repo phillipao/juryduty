@@ -1,6 +1,7 @@
 package com.philoertel.juryduty;
 
 import android.app.Application;
+import android.content.Context;
 
 import org.joda.time.DateTime;
 
@@ -18,6 +19,9 @@ public class JuryModule {
     public JuryModule(Application application) {
         this.application = application;
     }
+
+    @Provides
+    Context provideContext() { return application; }
 
     @Provides
     DutiesLoader provideDutiesLoader() {

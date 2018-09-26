@@ -25,41 +25,49 @@ class CheckInAlarmSetter {
     private static final String TAG = "CheckInAlarmSetter";
 
     private DateTime mNow;
+    private Context mContext;
+    private final DutiesLoader mDutiesLoader;
+    private final InstructionsLoader mInstructionsLoader;
 
     @Inject
-    public CheckInAlarmSetter(@Now DateTime now) {
+    public CheckInAlarmSetter(
+            @Now DateTime now,
+            Context context,
+            DutiesLoader dutiesLoader,
+            InstructionsLoader instructionsLoader) {
         this.mNow = now;
+        this.mContext = context;
+        this.mDutiesLoader = dutiesLoader;
+        this.mInstructionsLoader = instructionsLoader;
     }
 
     /**
      * Schedule an alarm at {@code when} for {@code day}.
      */
-    static void schedule(Context context, DateTime day, long when) {
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(
+    void schedule(DateTime day, long when) {
+        AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(
                 Context.ALARM_SERVICE);
-        Intent alarmIntent = new Intent(context, CheckInAlarmReceiver.class);
+        Intent alarmIntent = new Intent(mContext, CheckInAlarmReceiver.class);
         alarmIntent.putExtra(CheckInAlarmReceiver.EXTRA_DATE, day.toString());
-        PendingIntent pi = PendingIntent.getBroadcast(context, 0,
+        PendingIntent pi = PendingIntent.getBroadcast(mContext, 0,
                 alarmIntent, 0);
 
         alarmManager.set(AlarmManager.RTC, when, pi);
     }
 
-    static void dlog(String msg, Object... args) {
+    private static void dlog(String msg, Object... args) {
         if (BuildConfig.DEBUG) {
             Log.d(TAG, String.format(msg, args));
         }
     }
 
-    public void setAlarms(Context context) {
-        DutiesLoader dutiesLoader = new DutiesLoader(context.getFilesDir());
-        List<Duty> duties = dutiesLoader.readDuties();
+    public void setAlarms() {
+        List<Duty> duties = mDutiesLoader.readDuties();
         dlog("Loaded %d duties", duties.size());
         sortByDate(duties);
 
-        InstructionsLoader instructionsLoader = new InstructionsLoader(context.getFilesDir());
         Map<DateTime, Instructions> instByDate =
-                InstructionsLoader.toMapByDate(instructionsLoader.readInstructions());
+                InstructionsLoader.toMapByDate(mInstructionsLoader.readInstructions());
         dlog("Loaded %d instructions", instByDate.size());
 
         dutyLoop:
@@ -83,7 +91,7 @@ class CheckInAlarmSetter {
                 if (mNow.isAfter(day.plusDays(1))) {
                     continue;  // too late. missed 'em.
                 }
-                schedule(context, day, day.minusHours(7).getMillis());
+                schedule(day, day.minusHours(7).getMillis());
                 break dutyLoop;  // Just schedule one day
             }
         }

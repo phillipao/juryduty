@@ -107,6 +107,6 @@ public class AddDutyActivity extends AppCompatActivity {
             }
         }
 
-        checkInAlarmSetter.setAlarms(this);
+        checkInAlarmSetter.setAlarms();
     }
 }

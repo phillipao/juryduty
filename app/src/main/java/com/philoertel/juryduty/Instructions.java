@@ -1,8 +1,5 @@
 package com.philoertel.juryduty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.time.DateTime;
@@ -10,7 +7,9 @@ import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Jury reporting instructions for a given day.
@@ -18,7 +17,6 @@ import java.util.List;
  * <p>This is a representation of the instructions given by the court, whose main purpose is to
  * instruct a set of reporting groups to appear in court.
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Instructions {
 
     // Reporting instructions implicitly refer to US/Pacific time.
@@ -32,9 +30,11 @@ public class Instructions {
     // The list of groups who are instructed to report.
     private List<String> reportingGroups;
 
-    public Instructions() {}
+    public Instructions(DateTime date, ArrayList<String> groups) {
+        this.dateString = date.toString("yyyyMMdd", Locale.US);
+        this.reportingGroups = groups;
+    }
 
-    @JsonIgnore
     public DateTime getDateTime() {
         return formatter.parseDateTime(dateString);
     }
@@ -46,16 +46,8 @@ public class Instructions {
         return dateString;
     }
 
-    public void setDateString(String dateString) {
-        this.dateString = dateString;
-    }
-
     public List<String> getReportingGroups() {
         return reportingGroups;
-    }
-
-    public void setReportingGroups(List<String> reportingGroups) {
-        this.reportingGroups = reportingGroups;
     }
 
     @Override

@@ -74,7 +74,7 @@ public class CheckInAlarmReceiver extends BroadcastReceiver {
                         return;
                     }
                     Log.i(TAG, "Rescheduling in 5 minutes");
-                    CheckInAlarmSetter.schedule(context, day, mNow.getMillis() + 1000 * 60 * 5);
+                    mCheckInAlarmSetter.schedule(day, mNow.getMillis() + 1000 * 60 * 5);
                     return;
                 }
 
@@ -88,7 +88,7 @@ public class CheckInAlarmReceiver extends BroadcastReceiver {
                         return;
                     }
                     Log.i(TAG, "Rescheduling in 15 minutes");
-                    CheckInAlarmSetter.schedule(context, day, mNow.getMillis() + 1000 * 60 * 15);
+                    mCheckInAlarmSetter.schedule(day, mNow.getMillis() + 1000 * 60 * 15);
                     return;
                 }
 
@@ -105,7 +105,7 @@ public class CheckInAlarmReceiver extends BroadcastReceiver {
                         }
                     }
                 }
-                mCheckInAlarmSetter.setAlarms(context);
+                mCheckInAlarmSetter.setAlarms();
             }
         });
     }
@@ -127,7 +127,7 @@ public class CheckInAlarmReceiver extends BroadcastReceiver {
     private boolean giveUp(Context context, DateTime day) {
         if (mNow.getHourOfDay() >= 19) {
             Notifier.createNoDataNotification(context, day);
-            mCheckInAlarmSetter.setAlarms(context);
+            mCheckInAlarmSetter.setAlarms();
             return true;
         } else {
             return false;
