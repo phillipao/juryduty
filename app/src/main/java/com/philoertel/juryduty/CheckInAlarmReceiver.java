@@ -28,7 +28,7 @@ import static com.philoertel.juryduty.Annotations.Now;
 /**
  * Receives an alarm that it's time to check in.
  * <p>
- * If instructions aren't ready, tries to check in again and again, evntually notifying the user.
+ * If instructions aren't ready, tries to check in again and again, eventually notifying the user.
  * <p>
  * When instructions are found, process them. Give instructions to the user. Possibly set an alarm
  * for the following day.

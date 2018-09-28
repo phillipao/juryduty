@@ -152,6 +152,15 @@ public class CheckInAlarmSetterTest {
         assertThat(triggerTime()).isEqualTo(makeDateTime(2016, 1, 4, 17));
     }
 
+    @Test
+    public void mondayNight_HaveTuesdayButNotMonday() {
+        when(mockInstructionsLoader.readInstructions())
+                .thenReturn(Lists.newArrayList(
+                        new Instructions(makeDateTime(2016, 1, 5, 0), new ArrayList<String>())));
+        setter(makeDateTime(2016, 1, 4, 17), dutyThisWeek).setAlarms();
+        assertThat(triggerTime()).isEqualTo(makeDateTime(2016, 1, 5, 17));
+    }
+
     private CheckInAlarmSetter setter(DateTime now, DutiesLoader dutiesLoader) {
         return new CheckInAlarmSetter(now, RuntimeEnvironment.application, dutiesLoader, mockInstructionsLoader);
     }

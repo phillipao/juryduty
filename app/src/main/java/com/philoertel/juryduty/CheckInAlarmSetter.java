@@ -66,8 +66,8 @@ class CheckInAlarmSetter {
         dlog("Loaded %d duties", duties.size());
         sortByDate(duties);
 
-        Map<DateTime, Instructions> instByDate =
-                InstructionsLoader.toMapByDate(mInstructionsLoader.readInstructions());
+        List<Instructions> instructionsList = mInstructionsLoader.readInstructions();
+        Map<DateTime, Instructions> instByDate = InstructionsLoader.toMapByDate(instructionsList);
         dlog("Loaded %d instructions", instByDate.size());
 
         dutyLoop:
@@ -88,13 +88,22 @@ class CheckInAlarmSetter {
                         continue;
                     }
                 }
-                if (mNow.isAfter(day.plusDays(1))) {
+                if (mNow.isAfter(day.plusDays(1)) || laterInstructionsHaveBeenSeen(day, instructionsList)) {
                     continue;  // too late. missed 'em.
                 }
                 schedule(day, day.minusHours(7).getMillis());
                 break dutyLoop;  // Just schedule one day
             }
         }
+    }
+
+    private boolean laterInstructionsHaveBeenSeen(DateTime day, List<Instructions> instructionsList) {
+        for (Instructions instructions : instructionsList) {
+            if (instructions.getDateTime().isAfter(day)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void sortByDate(List<Duty> input) {
