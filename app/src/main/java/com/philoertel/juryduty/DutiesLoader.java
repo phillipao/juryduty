@@ -41,8 +41,7 @@ class DutiesLoader {
         try {
             lines = new ArrayList<>(FileUtils.readLines(dutiesFile));
         } catch (IOException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
+            throw new RuntimeException(e);
         }
         ArrayList<Duty> newDuties = new ArrayList<>();
         ObjectReader reader = OBJECT_MAPPER.readerFor(Duty.class);
@@ -51,8 +50,7 @@ class DutiesLoader {
             try {
                 duty = reader.readValue(line);
             } catch (IOException e) {
-                e.printStackTrace();
-                continue;
+                throw new RuntimeException(e);
             }
             newDuties.add(duty);
         }
@@ -67,13 +65,13 @@ class DutiesLoader {
             try {
                 lines.add(writer.writeValueAsString(duty));
             } catch (JsonProcessingException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         try {
             FileUtils.writeLines(dutiesFile, lines);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }
