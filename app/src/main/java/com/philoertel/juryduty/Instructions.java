@@ -2,6 +2,7 @@ package com.philoertel.juryduty;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -33,7 +34,11 @@ public class Instructions {
     // The list of groups who are instructed to report.
     private List<String> reportingGroups;
 
-    public Instructions() {}
+    public Instructions(@JsonProperty("dateString") String dateString,
+                        @JsonProperty("reportingGroups") List<String> groups) {
+        this.dateString = dateString;
+        this.reportingGroups = groups;
+    }
 
     public Instructions(DateTime date, List<String> groups) {
         this.dateString = date.toString("yyyyMMdd", Locale.US);
@@ -52,16 +57,8 @@ public class Instructions {
         return dateString;
     }
 
-    public void setDateString(String dateString) {
-        this.dateString = dateString;
-    }
-
     public List<String> getReportingGroups() {
         return reportingGroups;
-    }
-
-    public void setReportingGroups(List<String> reportingGroups) {
-        this.reportingGroups = reportingGroups;
     }
 
     @Override

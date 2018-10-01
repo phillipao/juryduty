@@ -36,7 +36,8 @@ public class CheckInAlarmSetterTest {
     @Rule public MockitoRule rule = MockitoJUnit.rule();
     @Mock private DutiesLoader dutyThisWeek;
     @Mock private DutiesLoader noDuty;
-    @Mock private InstructionsLoader mockInstructionsLoader;
+
+    private InstructionsLoader instructionsLoader;
 
     private ShadowAlarmManager shadowAlarmManager;
 
@@ -49,6 +50,8 @@ public class CheckInAlarmSetterTest {
 
         when(dutyThisWeek.readDuties()).thenReturn(duties);
         when(noDuty.readDuties()).thenReturn(Lists.<Duty>newArrayList());
+
+        instructionsLoader = new InstructionsLoader(RuntimeEnvironment.application.getFilesDir());
     }
 
     @Test
@@ -136,8 +139,7 @@ public class CheckInAlarmSetterTest {
 
     @Test
     public void sundayMorning_HaveMondayAlready() {
-        when(mockInstructionsLoader.readInstructions())
-                .thenReturn(Lists.newArrayList(
+        instructionsLoader.saveInstructions(Lists.newArrayList(
                         new Instructions(makeDateTime(2016, 1, 4, 0), new ArrayList<String>())));
         setter(makeDateTime(2016, 1, 3, 10), dutyThisWeek).setAlarms();
         assertThat(triggerTime()).isEqualTo(makeDateTime(2016, 1, 4, 17));
@@ -145,8 +147,7 @@ public class CheckInAlarmSetterTest {
 
     @Test
     public void sundayNight_HaveMondayAlready() {
-        when(mockInstructionsLoader.readInstructions())
-                .thenReturn(Lists.newArrayList(
+        instructionsLoader.saveInstructions(Lists.newArrayList(
                         new Instructions(makeDateTime(2016, 1, 4, 0), new ArrayList<String>())));
         setter(makeDateTime(2016, 1, 3, 18), dutyThisWeek).setAlarms();
         assertThat(triggerTime()).isEqualTo(makeDateTime(2016, 1, 4, 17));
@@ -154,15 +155,14 @@ public class CheckInAlarmSetterTest {
 
     @Test
     public void mondayNight_HaveTuesdayButNotMonday() {
-        when(mockInstructionsLoader.readInstructions())
-                .thenReturn(Lists.newArrayList(
+        instructionsLoader.saveInstructions(Lists.newArrayList(
                         new Instructions(makeDateTime(2016, 1, 5, 0), new ArrayList<String>())));
         setter(makeDateTime(2016, 1, 4, 17), dutyThisWeek).setAlarms();
         assertThat(triggerTime()).isEqualTo(makeDateTime(2016, 1, 5, 17));
     }
 
     private CheckInAlarmSetter setter(DateTime now, DutiesLoader dutiesLoader) {
-        return new CheckInAlarmSetter(now, RuntimeEnvironment.application, dutiesLoader, mockInstructionsLoader);
+        return new CheckInAlarmSetter(now, RuntimeEnvironment.application, dutiesLoader, instructionsLoader);
     }
 
     private DateTime triggerTime() {

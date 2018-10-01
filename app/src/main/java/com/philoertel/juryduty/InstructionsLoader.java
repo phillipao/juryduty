@@ -38,15 +38,14 @@ class InstructionsLoader {
             try {
                 instructionsFile.createNewFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         ArrayList<String> lines;
         try {
             lines = new ArrayList<>(FileUtils.readLines(instructionsFile));
         } catch (IOException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
+            throw new RuntimeException(e);
         }
         ArrayList<Instructions> newInstructions = new ArrayList<>();
 
@@ -56,8 +55,7 @@ class InstructionsLoader {
             try {
                 instructions = reader.readValue(line);
             } catch (IOException e) {
-                e.printStackTrace();
-                continue;
+                throw new RuntimeException(e);
             }
             newInstructions.add(instructions);
         }

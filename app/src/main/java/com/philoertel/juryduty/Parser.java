@@ -34,10 +34,7 @@ public class Parser {
         if (date == null) {
             throw new IllegalArgumentException("Did not find instructions for a date");
         }
-        Instructions instructions = new Instructions();
-        instructions.setDateString(date.toString("yyyyMMdd", Locale.US));
-        instructions.setReportingGroups(groups);
-        return instructions;
+        return new Instructions(date, groups);
     }
 
     private static DateTime parseDate(@Nullable DateTime previouslySeenDate, String input) {
