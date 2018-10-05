@@ -8,11 +8,8 @@ import com.google.common.collect.Lists;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.Shadows;
@@ -32,7 +29,6 @@ import static com.google.common.truth.Truth.assertThat;
         application = TestJuryDutyApplication.class)
 public class CheckInAlarmSetterTest {
 
-    @Rule public MockitoRule rule = MockitoJUnit.rule();
     private DutiesLoader dutiesLoader;
     private InstructionsLoader instructionsLoader;
 

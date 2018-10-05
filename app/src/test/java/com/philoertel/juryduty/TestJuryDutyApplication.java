@@ -2,14 +2,18 @@ package com.philoertel.juryduty;
 
 import org.joda.time.DateTime;
 
+import java.util.concurrent.CountDownLatch;
+
 /**
  * Created by poertel on 8/16/16.
  */
 public class TestJuryDutyApplication extends JuryDutyApplication {
     static CheckInAlarmSetter checkInAlarmSetter;
+    static Downloader downloader;
     static DutiesLoader dutiesLoader;
     static InstructionsLoader instructionsLoader;
     static DateTime now;
+    static CountDownLatch countDownLatch;
 
     @Override
     public JuryComponent getComponent() {
@@ -49,7 +53,9 @@ public class TestJuryDutyApplication extends JuryDutyApplication {
             @Override
             public void inject(CheckInAlarmReceiver receiver) {
                 receiver.mCheckInAlarmSetter = checkInAlarmSetter;
+                receiver.mDownloader = downloader;
                 receiver.mNow = now;
+                receiver.mLatch = countDownLatch;
             }
         };
     }

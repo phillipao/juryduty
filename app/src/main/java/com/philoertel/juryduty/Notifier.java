@@ -67,20 +67,34 @@ public class Notifier {
         mNotifyMgr.notify(mNotificationId, builder.build());
     }
 
+    /**
+     * Creates a notification that instruction parsing failed, telling the user to head to the
+     * court website.
+     */
+    static void createParsingErrorNotification(Context context) {
+        Log.i(TAG, "Error parsing instructions");
+        String notificationText = context.getString(R.string.parsing_error_notification);
+        createNotificationLinkingToWebsite(context, notificationText);
+    }
+
     /** Creates a notification that instructions aren't available. */
     static void createNoDataNotification(Context context, DateTime day) {
         Log.i(TAG, "Giving up for " + day.toString());
         String notificationText = context.getString(R.string.no_data_notification_text,
                 DateTimeFormat.forPattern("MM/dd/yyyy").print(day));
-        NotificationCompat.Builder mBuilder =
+        createNotificationLinkingToWebsite(context, notificationText);
+    }
+
+    private static void createNotificationLinkingToWebsite(Context context, String text) {
+        NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(context, CHANNEL_ID);
-        mBuilder.setSmallIcon(R.drawable.ic_action_add)
+        builder.setSmallIcon(R.drawable.ic_action_add)
                 .setContentTitle(context.getString(R.string.jury_duty_notification_title))
-                .setContentText(notificationText)
+                .setContentText(text)
                 .setAutoCancel(true)
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(notificationText));
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(text));
         Intent urlIntent = new Intent(Intent.ACTION_VIEW).setType("text/html").setData(
-                Uri.parse(CheckInAlarmReceiver.INSTRUCTIONS_URL_STR));
+                Uri.parse(Downloader.INSTRUCTIONS_URL_STR));
         PendingIntent dutyPendingIntent =
                 PendingIntent.getActivity(
                         context,
@@ -88,12 +102,12 @@ public class Notifier {
                         urlIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT
                 );
-        mBuilder.setContentIntent(dutyPendingIntent);
-        int mNotificationId = 1;
-        NotificationManager mNotifyMgr =
+        builder.setContentIntent(dutyPendingIntent);
+        int notificationId = 1;
+        NotificationManager notifyMgr =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         createNotificationChannel(context);
-        mNotifyMgr.notify(mNotificationId, mBuilder.build());
+        notifyMgr.notify(notificationId, builder.build());
     }
 
     private static void createNotificationChannel(Context context) {

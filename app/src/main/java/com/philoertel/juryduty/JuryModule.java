@@ -5,6 +5,8 @@ import android.content.Context;
 
 import org.joda.time.DateTime;
 
+import java.util.concurrent.CountDownLatch;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -34,8 +36,17 @@ public class JuryModule {
     }
 
     @Provides
-    @Now
+    Downloader provideDownloader() {
+        return new Downloader();
+    }
+
+    @Provides @Now
     DateTime provideNowDateTime() {
         return new DateTime();
+    }
+
+    @Provides
+    CountDownLatch provideCountDownLatch() {
+        return new CountDownLatch(1);
     }
 }

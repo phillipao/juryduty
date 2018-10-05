@@ -10,7 +10,7 @@ import static com.google.common.truth.Truth.assertThat;
 public class ParserTest {
 
     @Test
-    public void parseGroups() {
+    public void parseGroups() throws Exception {
         Instructions instructions = Parser.parseInstructions(fileContents);
         assertThat(instructions.getDateString()).isEqualTo("20180828");
         assertThat(instructions.getReportingGroups()).containsExactly(
