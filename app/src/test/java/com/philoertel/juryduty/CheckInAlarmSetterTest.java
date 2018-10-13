@@ -53,10 +53,25 @@ public class CheckInAlarmSetterTest {
     }
 
     @Test
-    public void sundayMorning() {
-        setter(makeDateTime(2016, 1, 3, 10), DUTY_THIS_WEEK).setAlarms();
-        DateTime fivePm = makeDateTime(2016, 1, 3, 17);
+    public void fridayMorningWeekBefore() {
+        setter(makeDateTime(2016, 1, 1, 10), DUTY_THIS_WEEK).setAlarms();
+        DateTime fivePm = makeDateTime(2016, 1, 1, 17);
         assertThat(triggerTime()).isEqualTo(fivePm);
+    }
+
+    @Test
+    public void fridayNightWeekBefore() {
+        DateTime now = makeDateTime(2016, 1, 1, 18);
+        setter(now, DUTY_THIS_WEEK).setAlarms();
+        assertThat(triggerTime()).isLessThan(now);
+    }
+
+    @Test
+    public void sundayMorning() {
+        DateTime now = makeDateTime(2016, 1, 3, 10);
+        setter(now, DUTY_THIS_WEEK).setAlarms();
+        DateTime fivePm = makeDateTime(2016, 1, 3, 17);
+        assertThat(triggerTime()).isLessThan(now);
     }
 
     @Test
