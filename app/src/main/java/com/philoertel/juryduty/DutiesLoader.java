@@ -11,13 +11,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Class responsible for loading Duty objects from disk and saving back to disk.
  *
  * <p>Jackson does most of the serialization work.
+ *
+ * <p>Observers are notified when the set of Duties is modified, via {@link #saveDuties(List)}.
  */
-class DutiesLoader {
+class DutiesLoader extends Observable {
     private static final String DATA_FILE = "duties.txt";
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -28,7 +31,7 @@ class DutiesLoader {
         this.filesDir = filesDir;
     }
 
-    public ArrayList<Duty> readDuties() {
+    ArrayList<Duty> readDuties() {
         File dutiesFile = new File(filesDir, DATA_FILE);
         if (!dutiesFile.exists()) {
             try {
@@ -57,7 +60,7 @@ class DutiesLoader {
         return newDuties;
     }
 
-    public void saveDuties(List<Duty> duties) {
+    void saveDuties(List<Duty> duties) {
         File dutiesFile = new File(filesDir, DATA_FILE);
         ArrayList<String> lines = new ArrayList<>();
         for (Duty duty : duties) {
@@ -73,5 +76,7 @@ class DutiesLoader {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        setChanged();
+        notifyObservers();
     }
 }

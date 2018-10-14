@@ -43,12 +43,15 @@ public class CheckInAlarmReceiverTest {
 
     @Before
     public void setup() {
+        instructionsLoader = new InstructionsLoader(RuntimeEnvironment.application.getFilesDir());
+        DutiesLoader dutiesLoader = new DutiesLoader(RuntimeEnvironment.application.getFilesDir());
+
         TestJuryDutyApplication.now = new DateTime(2016, 1, 3, 17, 0);
         TestJuryDutyApplication.countDownLatch = latch;
         TestJuryDutyApplication.checkInAlarmSetter = mockSetter;
         TestJuryDutyApplication.downloader = mockDownloader;
-
-        instructionsLoader = new InstructionsLoader(RuntimeEnvironment.application.getFilesDir());
+        TestJuryDutyApplication.dutiesLoader = dutiesLoader;
+        TestJuryDutyApplication.instructionsLoader = instructionsLoader;
 
         NotificationManager notificationManager =
                 (NotificationManager)RuntimeEnvironment.application.getSystemService(Context.NOTIFICATION_SERVICE);

@@ -36,6 +36,8 @@ public class CheckInAlarmReceiver extends BroadcastReceiver {
     @Inject CheckInAlarmSetter mCheckInAlarmSetter;
     @Inject CountDownLatch mLatch;
     @Inject Downloader mDownloader;
+    @Inject DutiesLoader mDutiesLoader;
+    @Inject InstructionsLoader mInstructionsLoader;
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
@@ -98,8 +100,7 @@ public class CheckInAlarmReceiver extends BroadcastReceiver {
             return;
         }
 
-        DutiesLoader dutiesLoader = new DutiesLoader(context.getFilesDir());
-        List<Duty> duties = dutiesLoader.readDuties();
+        List<Duty> duties = mDutiesLoader.readDuties();
         for (int i = 0; i < duties.size(); ++i) {
             Duty duty = duties.get(i);
             if (duty.overlapsWith(parsedInstructions)) {
@@ -118,14 +119,13 @@ public class CheckInAlarmReceiver extends BroadcastReceiver {
      * Saves the new instructions. Also dedups existing instructions by date.
      */
     private void saveNewInstructions(Instructions newInstructions, Context context) {
-        InstructionsLoader instructionsLoader = new InstructionsLoader(context.getFilesDir());
-        List<Instructions> instructionses = instructionsLoader.readInstructions();
+        List<Instructions> instructionses = mInstructionsLoader.readInstructions();
         Map<String, Instructions> instructionsByDate = new HashMap<>();
         for (Instructions i : instructionses) {
             instructionsByDate.put(i.getDateString(), i);
         }
         instructionsByDate.put(newInstructions.getDateString(), newInstructions);
-        instructionsLoader.saveInstructions(new ArrayList<>(instructionsByDate.values()));
+        mInstructionsLoader.saveInstructions(new ArrayList<>(instructionsByDate.values()));
     }
 
     private boolean giveUp(Context context, DateTime day) {

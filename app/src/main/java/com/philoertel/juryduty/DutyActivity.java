@@ -2,6 +2,7 @@ package com.philoertel.juryduty;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -18,13 +19,15 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.inject.Inject;
 
 import static com.philoertel.juryduty.Annotations.Now;
 import static java.text.DateFormat.getDateInstance;
 
-public class DutyActivity extends AppCompatActivity {
+public class DutyActivity extends AppCompatActivity implements Observer {
     public static final String DUTY_ID_EXTRA = "com.philoertel.juryduty.DUTY";
 
     @Inject CheckInAlarmSetter checkInAlarmSetter;
@@ -40,8 +43,10 @@ public class DutyActivity extends AppCompatActivity {
         ((JuryDutyApplication) getApplication()).getComponent().inject(this);
         setContentView(R.layout.activity_duty);
 
+        mInstructionsLoader.addObserver(this);
+
         Intent intent = getIntent();
-        int position =  intent.getIntExtra(DUTY_ID_EXTRA, 0);
+        int position = intent.getIntExtra(DUTY_ID_EXTRA, 0);
         List<Duty> duties = mDutiesLoader.readDuties();
         mDuty = duties.get(position);
 
@@ -202,5 +207,22 @@ public class DutyActivity extends AppCompatActivity {
     private String weekOf() {
         return String.format(getString(R.string.week_of),
                 getDateInstance().format(mDuty.getDate()));
+    }
+
+    @Override
+    public void update(@Nullable Observable observable, Object o) {
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                displayDuty((RelativeLayout) findViewById(R.id.dutyLayout));
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mInstructionsLoader.deleteObserver(this);
     }
 }

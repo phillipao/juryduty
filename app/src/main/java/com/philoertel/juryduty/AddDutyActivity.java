@@ -18,24 +18,24 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class AddDutyActivity extends AppCompatActivity {
-    private DutiesLoader dutiesLoader;
     private ArrayList<Duty> duties;
 
     @Inject CheckInAlarmSetter checkInAlarmSetter;
+    @Inject DutiesLoader mDutiesLoader;
+    @Inject InstructionsLoader mInstructionsLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((JuryDutyApplication) getApplication()).getComponent().inject(this);
         setContentView(R.layout.activity_add_duty);
-        dutiesLoader = new DutiesLoader(getFilesDir());
-        duties = dutiesLoader.readDuties();
+        duties = mDutiesLoader.readDuties();
 
         initToolbar();
     }
 
     private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.action_add_duty);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -79,13 +79,13 @@ public class AddDutyActivity extends AppCompatActivity {
     }
 
     private void addDuty() {
-        EditText etNewDuty = (EditText) findViewById(R.id.newDutyNumberText);
-        DatePicker datePicker = (DatePicker) findViewById(R.id.newDutyDatePicker);
+        EditText etNewDuty = findViewById(R.id.newDutyNumberText);
+        DatePicker datePicker = findViewById(R.id.newDutyDatePicker);
         Duty duty = Duty.fromYearMonthDayGroup(datePicker.getYear(), datePicker.getMonth() + 1,
                 datePicker.getDayOfMonth(), etNewDuty.getText().toString());
         int newDutyIndex = duties.size();
         duties.add(duty);
-        dutiesLoader.saveDuties(duties);
+        mDutiesLoader.saveDuties(duties);
 
         setAlarms(duty, newDutyIndex);
 
@@ -98,8 +98,7 @@ public class AddDutyActivity extends AppCompatActivity {
     }
 
     private void setAlarms(Duty duty, int newDutyIndex) {
-        InstructionsLoader loader = new InstructionsLoader(getFilesDir());
-        List<Instructions> instructionses = loader.readInstructions();
+        List<Instructions> instructionses = mInstructionsLoader.readInstructions();
         for (Instructions instructions : instructionses) {
             if (duty.calledBy(instructions)) {
                 Notifier.createPositiveNotification(this, newDutyIndex, instructions.getDateTime());

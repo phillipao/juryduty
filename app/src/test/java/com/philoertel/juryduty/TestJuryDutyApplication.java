@@ -41,6 +41,16 @@ public class TestJuryDutyApplication extends JuryDutyApplication {
             }
 
             @Override
+            public void inject(DebugActivity activity) {
+                activity.mDutiesLoader = dutiesLoader;
+            }
+
+            @Override
+            public void inject(DutiesActivity activity) {
+                activity.mDutiesLoader = dutiesLoader;
+            }
+
+            @Override
             public void inject(AddDutyActivity activity) {
                 activity.checkInAlarmSetter = checkInAlarmSetter;
             }
@@ -56,6 +66,8 @@ public class TestJuryDutyApplication extends JuryDutyApplication {
                 receiver.mDownloader = downloader;
                 receiver.mNow = now;
                 receiver.mLatch = countDownLatch;
+                receiver.mDutiesLoader = dutiesLoader;
+                receiver.mInstructionsLoader = instructionsLoader;
             }
         };
     }

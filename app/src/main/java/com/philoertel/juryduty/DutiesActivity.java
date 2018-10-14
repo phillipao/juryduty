@@ -2,6 +2,7 @@ package com.philoertel.juryduty;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -10,32 +11,40 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class DutiesActivity extends AppCompatActivity {
+import javax.inject.Inject;
+
+public class DutiesActivity extends AppCompatActivity implements Observer {
     private ArrayList<Duty> duties = new ArrayList<>();
     private ArrayAdapter<Duty> dutiesAdapter;
-    private DutiesLoader dutiesLoader;
+
+    @Inject DutiesLoader mDutiesLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((JuryDutyApplication) getApplication()).getComponent().inject(this);
         setContentView(R.layout.activity_duties);
-        ListView lvDuties = (ListView) findViewById(R.id.dutiesView);
+        ListView lvDuties = findViewById(R.id.dutiesView);
         lvDuties.setEmptyView(findViewById(R.id.emptyDutiesView));
-        dutiesLoader = new DutiesLoader(getFilesDir());
         dutiesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, duties);
         lvDuties.setAdapter(dutiesAdapter);
 
         initToolbar();
         setupListViewListener(lvDuties);
+
+        mDutiesLoader.addObserver(this);
     }
 
     private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.duties_title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -55,7 +64,7 @@ public class DutiesActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        duties = dutiesLoader.readDuties();
+        duties = mDutiesLoader.readDuties();
         dutiesAdapter.clear();
         dutiesAdapter.addAll(duties);
     }
@@ -90,12 +99,30 @@ public class DutiesActivity extends AppCompatActivity {
 
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
     public void onAddButtonClick(View v) {
         Intent intent = new Intent(getApplicationContext(), AddDutyActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void update(@Nullable Observable observable, Object o) {
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                duties = mDutiesLoader.readDuties();
+                dutiesAdapter.clear();
+                dutiesAdapter.addAll(duties);
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mDutiesLoader.deleteObserver(this);
     }
 }

@@ -7,6 +7,8 @@ import org.joda.time.DateTime;
 
 import java.util.concurrent.CountDownLatch;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -26,11 +28,13 @@ public class JuryModule {
     Context provideContext() { return application; }
 
     @Provides
+    @Singleton
     DutiesLoader provideDutiesLoader() {
         return new DutiesLoader(application.getFilesDir());
     }
 
     @Provides
+    @Singleton
     InstructionsLoader provideInstructionsLoader() {
         return new InstructionsLoader(application.getFilesDir());
     }

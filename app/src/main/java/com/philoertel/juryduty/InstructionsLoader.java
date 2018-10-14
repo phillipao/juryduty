@@ -1,5 +1,7 @@
 package com.philoertel.juryduty;
 
+import android.util.Log;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
@@ -15,13 +17,17 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
 /**
  * Class responsible for loading Instructions objects from disk and saving back to disk.
  *
  * <p>Jackson does most of the serialization work.
+ *
+ * <p>Observers are notified when the set of Instructions is modified, via
+ * {@link #saveInstructions(List)}.
  */
-class InstructionsLoader {
+class InstructionsLoader extends Observable {
     private static final String DATA_FILE = "instructions.txt";
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -32,7 +38,7 @@ class InstructionsLoader {
         this.filesDir = filesDir;
     }
 
-    public ArrayList<Instructions> readInstructions() {
+    ArrayList<Instructions> readInstructions() {
         File instructionsFile = new File(filesDir, DATA_FILE);
         if (!instructionsFile.exists()) {
             try {
@@ -63,7 +69,7 @@ class InstructionsLoader {
     }
 
     /** Transforms a Collection of Instructions to a map keyed by date. */
-    public static Map<DateTime, Instructions> toMapByDate(Collection<Instructions> instructionses) {
+    static Map<DateTime, Instructions> toMapByDate(Collection<Instructions> instructionses) {
         Map<DateTime, Instructions> map = new HashMap<>();
         for (Instructions i : instructionses) {
             map.put(i.getDateTime(), i);
@@ -71,7 +77,7 @@ class InstructionsLoader {
         return map;
     }
 
-    public void saveInstructions(List<Instructions> instructionss) {
+    void saveInstructions(List<Instructions> instructionss) {
         ObjectWriter writer = OBJECT_MAPPER.writer();
         File instructionsFile = new File(filesDir, DATA_FILE);
         ArrayList<String> lines = new ArrayList<>();
@@ -90,5 +96,8 @@ class InstructionsLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Log.w("InstructionsLoader", String.format("going to warn %d observers", countObservers()));
+        setChanged();
+        notifyObservers();
     }
 }
