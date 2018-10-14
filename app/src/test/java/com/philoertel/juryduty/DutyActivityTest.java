@@ -3,6 +3,8 @@ package com.philoertel.juryduty;
 import android.content.Intent;
 import android.widget.TextView;
 
+import com.google.common.collect.Lists;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
@@ -14,6 +16,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
@@ -35,34 +38,31 @@ public class DutyActivityTest {
     }
 
     @Mock private CheckInAlarmSetter mockCheckInAlarmSetter;
-    @Mock private DutiesLoader mockDutiesLoader;
-    @Mock private InstructionsLoader mockInstructionsLoader;
     @Rule public MockitoRule rule = MockitoJUnit.rule();
     private DateTime mockNow = new DateTime(2016, 1, 1, 12, 0, DateTimeZone.forID("US/Pacific"));
 
     @Before
     public void setUp() {
+        DutiesLoader dutiesLoader = new DutiesLoader(RuntimeEnvironment.application.getFilesDir());
+        InstructionsLoader instructionsLoader = new InstructionsLoader(RuntimeEnvironment.application.getFilesDir());
+
         TestJuryDutyApplication.checkInAlarmSetter = mockCheckInAlarmSetter;
-        TestJuryDutyApplication.dutiesLoader = mockDutiesLoader;
-        TestJuryDutyApplication.instructionsLoader = mockInstructionsLoader;
+        TestJuryDutyApplication.dutiesLoader = dutiesLoader;
+        TestJuryDutyApplication.instructionsLoader = instructionsLoader;
         TestJuryDutyApplication.now = mockNow;
 
-        ArrayList<Duty> duties = new ArrayList<>();
-        duties.add(duty);
-        when(mockDutiesLoader.readDuties()).thenReturn(duties);
-        ArrayList<Instructions> instructions = new ArrayList<>();
-        when(mockInstructionsLoader.readInstructions()).thenReturn(instructions);
+        dutiesLoader.saveDuties(Lists.newArrayList(duty));
     }
 
     @Test
-    public void threeDaysFromNow() {
-        TestJuryDutyApplication.now = new DateTime(2016, 1, 1, 12, 0,
+    public void fourDaysFromNow() {
+        TestJuryDutyApplication.now = new DateTime(2015, 12, 31, 12, 0,
                 DateTimeZone.forID("US/Pacific"));
         DutyActivity activity = Robolectric.buildActivity(DutyActivity.class,
                 INTENT).create().get();
 
-        TextView daysLeftView = (TextView) activity.findViewById(R.id.daysLeftView);
-        assertThat(daysLeftView.getText().toString()).isEqualTo("3");
+        TextView daysLeftView = activity.findViewById(R.id.daysLeftView);
+        assertThat(daysLeftView.getText().toString()).isEqualTo("4");
     }
 
     @Test
@@ -72,8 +72,8 @@ public class DutyActivityTest {
         DutyActivity activity = Robolectric.buildActivity(DutyActivity.class,
                 INTENT).create().get();
 
-        TextView daysLeftView = (TextView) activity.findViewById(R.id.daysLeftView);
-        assertThat(daysLeftView.getText().toString()).isEqualTo("2");
+        TextView daysAgoView = activity.findViewById(R.id.daysAgoView);
+        assertThat(daysAgoView.getText().toString()).startsWith("Week of ");
     }
 
     @Test
@@ -83,7 +83,7 @@ public class DutyActivityTest {
         DutyActivity activity = Robolectric.buildActivity(DutyActivity.class,
                 INTENT).create().get();
 
-        TextView daysAgoView = (TextView) activity.findViewById(R.id.daysAgoView);
+        TextView daysAgoView = activity.findViewById(R.id.daysAgoView);
         assertThat(daysAgoView.getText().toString()).isEqualTo("This week");
     }
 }

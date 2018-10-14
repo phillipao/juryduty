@@ -50,8 +50,8 @@ public class DutyActivity extends AppCompatActivity {
     }
 
     private void initToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(formatDate(mDuty));
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(weekOf());
         setSupportActionBar(toolbar);
     }
 
@@ -61,31 +61,35 @@ public class DutyActivity extends AppCompatActivity {
         int daysAhead = Days.daysBetween(normalizedNow,
                 new DateTime(mDuty.getDate().getTime())).getDays();
 
-        if (daysAhead > 1) {
+        if (daysAhead > 3) {  // Period ending Thursday night, the week before.
             getLayoutInflater().inflate(R.layout.view_future_duty, dutyLayout);
 
-            TextView daysLeftView = (TextView) findViewById(R.id.daysLeftView);
-            daysLeftView.setText(daysAhead + "");
+            TextView daysLeftView = findViewById(R.id.daysLeftView);
+            daysLeftView.setText(String.valueOf(daysAhead));
         } else if (daysAhead <= -4) {
             getLayoutInflater().inflate(R.layout.view_past_duty, dutyLayout);
 
-            TextView daysAgoView = (TextView) findViewById(R.id.daysAgoView);
+            TextView daysAgoView = findViewById(R.id.daysAgoView);
             daysAgoView.setText(summarizeDutyTime(daysAhead)); // how many days ago it ended
 
             List<Instructions> instructionses = mInstructionsLoader.readInstructions();
             String groupCalledSummary = summarizeDutyOutcome(instructionses);
-            TextView groupCalledView = (TextView) findViewById(R.id.groupCalledView);
+            TextView groupCalledView = findViewById(R.id.groupCalledView);
             groupCalledView.setText(groupCalledSummary);
         } else {
             getLayoutInflater().inflate(R.layout.view_current_duty, dutyLayout);
 
-            TextView daysAgoView = (TextView) findViewById(R.id.daysAgoView);
-            daysAgoView.setText(R.string.this_week);
+            TextView daysAgoView = findViewById(R.id.daysAgoView);
+            if (daysAhead > 1) {  // So, Friday or Saturday before duty
+                daysAgoView.setText(weekOf());
+            } else {
+                daysAgoView.setText(R.string.this_week);
+            }
 
             List<Instructions> instructionses = mInstructionsLoader.readInstructions();
             summarizeDutyStatus(instructionses);
         }
-        TextView groupView = (TextView) findViewById(R.id.group);
+        TextView groupView = findViewById(R.id.group);
         groupView.setText(mDuty.getGroup());
     }
 
@@ -107,20 +111,20 @@ public class DutyActivity extends AppCompatActivity {
             if (mDuty.overlapsWith(instructions)) {
                 ++matchingInstructions;
                 if (mDuty.calledBy(instructions)) {
-                    return String.format("Your group was called on %s.",
+                    return String.format(getString(R.string.your_group_was_called),
                             SimpleDateFormat.getDateInstance().format(
                                     instructions.getDateTime().toDate()));
                 }
             }
         }
         if (matchingInstructions >= 5) {
-            return "Your group was not called.";
+            return getString(R.string.your_group_was_not_called);
         } else if (mDuty.getWeekInterval().contains(mNow)) {
-            return "Your number has not been called yet.";
+            return getString(R.string.your_number_has_not_been_called);
         } else if (matchingInstructions == 0) {
-            return "We don't have any data for that week.";
+            return getString(R.string.no_data_for_that_week);
         } else {
-            return "Data for that week is incomplete.";
+            return getString(R.string.data_is_incomplete);
         }
     }
 
@@ -195,8 +199,8 @@ public class DutyActivity extends AppCompatActivity {
         mDutiesLoader.saveDuties(duties);
     }
 
-    private String formatDate(Duty duty) {
-        return String.format("Week of %s",
-                getDateInstance().format(duty.getDate()));
+    private String weekOf() {
+        return String.format(getString(R.string.week_of),
+                getDateInstance().format(mDuty.getDate()));
     }
 }

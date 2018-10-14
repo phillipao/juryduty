@@ -26,6 +26,7 @@
     <string name="jury_duty_notice">You have jury duty on %1$s. Click for details…</string>
     <string name="has_duty_debug_button_title">Has Duty notification</string>
     <string name="has_not_duty_debug_button_title">Has No Duty notification</string>
+    <string name="week_of">Week of %1$s</string>
     <string name="this_week">This week</string>
     <string name="not_started_yet">Not started yet.</string>
     <string name="ended_yesterday">Ended yesterday</string>
@@ -35,4 +36,9 @@
     <string name="toast_deleted">Deleted</string>
     <string name="channel_name">Jury Duty notifications</string>
     <string name="parsing_error_notification">Error parsing juror instructions. Click here to go to the court\'s website.</string>
+    <string name="your_group_was_called">Your group was called on %s.</string>
+    <string name="your_group_was_not_called">Your group was not called.</string>
+    <string name="your_number_has_not_been_called">Your number has not been called yet.</string>
+    <string name="no_data_for_that_week">We don\'t have any data for that week.</string>
+    <string name="data_is_incomplete">Data for that week is incomplete.</string>
 </resources>
