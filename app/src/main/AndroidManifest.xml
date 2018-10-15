@@ -19,7 +19,7 @@
             android:label="@string/title_activity_duty"
             android:parentActivityName=".DutiesActivity">
             <meta-data
-                android:name="android.support.bj yhgPARENT_ACTIVITY"
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.philoertel.juryduty.DutiesActivity"/>
         </activity>
         <activity

@@ -29,10 +29,14 @@
  -keep class org.codehaus.** { *; }
  -keepclassmembers public final enum org.codehaus.jackson.annotate.JsonAutoDetect$Visibility {
  public static final org.codehaus.jackson.annotate.JsonAutoDetect$Visibility *; }
-
  -keep public class com.philoertel.juryduty.** {
    public void set*(***);
    public *** get*();
+ }
+ -keepclassmembers class com.philoertel.juryduty.Instructions
+ -keepclassmembers class com.philoertel.juryduty.Duty
+ -keepclassmembers class * {
+     @com.fasterxml.jackson.annotation.* *;
  }
 
 # For AWS. Source: https://github.com/aws/aws-sdk-android/blob/master/Proguard.md
