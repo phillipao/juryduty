@@ -14,17 +14,16 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Parser {
-
-    private static final String TAG = "Parser";
+class Parser {
 
     /**
-     * Parses an Instructions object from the text content of the reporting instructions website.\
+     * Parses an Instructions object from the text content of the reporting instructions website.
      */
     static Instructions parseInstructions(String content) throws ParseException {
+        content = content.replaceAll("\\s+|&nbsp;", " ");
         // ?s causes . to match across newlines
         // .*? is the non-greedy version of .*
-        Pattern p = Pattern.compile("(?s)GROUPS REPORTING:(.*?)GROUPS");
+        Pattern p = Pattern.compile("(?s)GROUPS REPORTING:(.*?)(GROUPS ON STANDBY|GROUPS STANDBY|GROUPS EXCUSED)");
         Matcher m = p.matcher(content);
         DateTime date = null;
         ArrayList<String> groups = new ArrayList<>();
@@ -70,7 +69,7 @@ public class Parser {
         if (input.contains(noGroupsStr)) {
             return new ArrayList<>();
         }
-        Pattern groupsPattern = Pattern.compile("Group(.*\\d+.*)report to");
+        Pattern groupsPattern = Pattern.compile("Group(.*?)report to");
         Matcher groupsMatcher = groupsPattern.matcher(input);
         while (groupsMatcher.find()) {
             Pattern groupPattern = Pattern.compile("\\d+");

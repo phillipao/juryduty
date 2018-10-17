@@ -93,7 +93,7 @@ public class CheckInAlarmReceiverTest {
     public void testReceive() throws Exception {
         when(mockDownloader.downloadUrl()).thenReturn(
                 "GROUPS REPORTING: There are no groups scheduled to report on Tuesday, August 28, "
-                        + "2018. GROUPS ...");
+                        + "2018. GROUPS ON STANDBY");
 
         DateTime day = new DateTime(2016, 1, 1, 17, 0);
         Intent intent = new Intent(RuntimeEnvironment.application, CheckInAlarmReceiver.class);
