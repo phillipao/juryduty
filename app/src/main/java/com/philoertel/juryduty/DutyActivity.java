@@ -58,6 +58,7 @@ public class DutyActivity extends AppCompatActivity implements Observer {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(weekOf());
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void displayDuty(RelativeLayout dutyLayout) {
@@ -170,11 +171,6 @@ public class DutyActivity extends AppCompatActivity implements Observer {
         switch (item.getItemId()) {
             case R.id.action_add_duty:
                 intent = new Intent(getApplicationContext(), AddDutyActivity.class);
-                startActivity(intent);
-                return true;
-
-            case R.id.action_duties:
-                intent = new Intent(getApplicationContext(), DutiesActivity.class);
                 startActivity(intent);
                 return true;
 

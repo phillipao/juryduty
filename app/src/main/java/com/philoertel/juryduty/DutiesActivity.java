@@ -47,7 +47,6 @@ public class DutiesActivity extends AppCompatActivity implements Observer {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.duties_title);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupListViewListener(ListView lvDuties) {

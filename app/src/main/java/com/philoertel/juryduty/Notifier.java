@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.text.format.DateFormat;
 import android.util.Log;
 
@@ -51,13 +52,10 @@ public class Notifier {
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(message));
         Intent dutyIntent = new Intent(context, DutyActivity.class);
         dutyIntent.putExtra(DutyActivity.DUTY_ID_EXTRA, dutyIndex);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addNextIntentWithParentStack(dutyIntent);
         PendingIntent dutyPendingIntent =
-                PendingIntent.getActivity(
-                        context,
-                        0,
-                        dutyIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(dutyPendingIntent);
         int mNotificationId = 1;
         NotificationManager mNotifyMgr =
