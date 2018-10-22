@@ -71,6 +71,9 @@ public class DutiesActivity extends AppCompatActivity implements Observer {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_duties, menu);
+        if (BuildConfig.DEBUG) {
+            menu.add(Menu.NONE, R.id.action_debug, Menu.NONE, R.string.action_debugs);
+        }
         return true;
     }
 

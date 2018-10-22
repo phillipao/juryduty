@@ -40,4 +40,5 @@
     <string name="your_number_has_not_been_called">Your number has not been called yet.</string>
     <string name="no_data_for_that_week">We don\'t have any data for that week.</string>
     <string name="data_is_incomplete">Data for that week is incomplete.</string>
+    <string name="action_save">SAVE</string>
 </resources>
