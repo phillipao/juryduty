@@ -8,6 +8,6 @@
         android:title="@string/action_delete"
         app:showAsAction="never"/>
 
-    <reserved-id id="@+id/action_debug"/>
+    <reserved-id android:id="@+id/action_debug" />
 
 </menu>
