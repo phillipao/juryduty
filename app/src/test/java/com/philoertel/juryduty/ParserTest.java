@@ -32,6 +32,13 @@ public class ParserTest {
                 "617", "623");
     }
 
+    @Test
+    public void file20191114() throws Exception {
+        Instructions instructions = Parser.parseInstructions(parseFromFile("20191114.html"));
+        assertThat(instructions.getDateString()).isEqualTo("20191114");
+        assertThat(instructions.getReportingGroups()).containsExactly("608", "617", "622", "624", "601", "612");
+    }
+
     private String parseFromFile(String fileName) throws Exception {
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource(fileName);

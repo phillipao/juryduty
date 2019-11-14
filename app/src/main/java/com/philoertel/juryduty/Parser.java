@@ -65,8 +65,8 @@ class Parser {
 
     private static Collection<String> parseGroups(String input) throws ParseException {
         ArrayList<String> groups = new ArrayList<>();
-        String noGroupsStr = "There are no groups scheduled";
-        if (input.contains(noGroupsStr)) {
+        String noGroupsStr = "no groups";
+        if (input.toLowerCase().contains(noGroupsStr)) {
             return new ArrayList<>();
         }
         Pattern groupsPattern = Pattern.compile("Group(.*?)report to");
