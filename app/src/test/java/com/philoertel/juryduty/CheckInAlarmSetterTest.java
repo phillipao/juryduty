@@ -25,8 +25,7 @@ import static com.google.common.truth.Truth.assertThat;
  * Tests for {@link CheckInAlarmSetter}.
  */
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class,
-        application = TestJuryDutyApplication.class)
+@Config(application = TestJuryDutyApplication.class)
 public class CheckInAlarmSetterTest {
 
     private DutiesLoader dutiesLoader;

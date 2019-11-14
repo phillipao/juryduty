@@ -19,15 +19,11 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
-import java.util.ArrayList;
-
 import static com.google.common.truth.Truth.assertThat;
-import static org.mockito.Mockito.when;
 
 /** Tests for {@link DutyActivity}. */
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class,
-        application = TestJuryDutyApplication.class)
+@Config(application = TestJuryDutyApplication.class)
 public class DutyActivityTest {
 
     // 2016-01-04 through 2016-01-08

@@ -29,8 +29,7 @@ import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(constants = BuildConfig.class,
-        application = TestJuryDutyApplication.class)
+@Config(application = TestJuryDutyApplication.class)
 public class CheckInAlarmReceiverTest {
     @Rule public MockitoRule rule = MockitoJUnit.rule();
     private CountDownLatch latch = new CountDownLatch(1);
